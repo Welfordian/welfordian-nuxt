@@ -20,7 +20,7 @@
           <nuxt-link to="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-blue-lighter hover:text-white mr-4">
             Photography
           </nuxt-link>
-          <nuxt-link to="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-blue-lighter hover:text-white">
+          <nuxt-link to="/contact" class="block mt-4 lg:inline-block lg:mt-0 text-blue-lighter hover:text-white">
             Contact
           </nuxt-link>
         </div>

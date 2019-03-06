@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-wrap justify-between items-center self-center justify-center sm:justify-center mb-0 sm:mb-8">
     <div class="w-full sm:w-full lg:w-1/4">
-      <img class="mt-8 mb-8 w-48 h-48 m-auto block shadow-lg rounded-lg" src="https://api.welford.me/images/me-min.jpg" />
+      <img class="mt-8 mb-8 w-48 h-48 m-auto block shadow-lg rounded-lg" src="https://api.welford.me/images/me-min.jpg" alt="My very own beautiful face"/>
     </div>
 
     <div class="mt-8 mb-8 w-full justify-center lg:w-1/3">
-      <h1 class="text-center lg:text-left">I'm Joshua Welford</h1>
+      <h1 class="text-center lg:text-left">I'm Joshua Welford.</h1>
       <p class="text-center lg:text-left">A web developer specializing in Laravel & Vue.</p>
 
       <div class="flex justify-center lg:justify-start">
