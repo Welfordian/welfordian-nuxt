@@ -23,6 +23,12 @@
                 post: this.$route.params.full_post || this.$route.params.post
             }
         },
+
+        head() {
+            return {
+                title: this.post.title
+            }
+        }
     }
 </script>
 
