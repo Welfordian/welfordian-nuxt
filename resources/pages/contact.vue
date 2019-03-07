@@ -135,7 +135,7 @@
                 }
 
                 if (!this.hasErrors) {
-                    let request = new Request('https://welford.me/contact', {
+                    let request = new Request('https://api.welford.me/contact', {
                         method: "POST",
                         body: JSON.stringify(this.contact)
                     });
