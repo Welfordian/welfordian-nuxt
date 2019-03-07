@@ -145,6 +145,7 @@
                         .then(json => {
                             this.formSubmitting = false;
                             this.formSubmitted = true;
+
                             this.clearForm();
 
                             setTimeout(() => {
@@ -186,9 +187,9 @@
             },
 
             clearForm() {
-                this.contact.more_details = "";
-                this.contact.email_address = "";
-                this.contact.full_name = "";
+                this.contact.message = "";
+                this.contact.email = "";
+                this.contact.name = "";
                 this.contact.enquiry_types = [
                     {type: "general_enquiry", state: true, text: "General Enquiry"},
                     {type: "web_development", state: false, text: "Web Development"},
