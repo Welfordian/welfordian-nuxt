@@ -22,7 +22,7 @@
           </nuxt-link>
         </div>
         <div>
-          <p class="nav-btn inline-block text-sm px-4 py-2 leading-none text-white no-underline hover:border-transparent mt-4 lg:mt-0 mr-4 flex items-center">
+          <p class="nav-btn inline-block text-sm leading-none text-white no-underline hover:border-transparent mt-4 lg:mt-0 mr-4 flex items-center">
             <span class="mr-2">Dark Mode</span>
             <span
               @click="toggleTheme"
