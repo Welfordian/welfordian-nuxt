@@ -9,7 +9,7 @@
       <p class="text-center lg:text-left">A web developer specializing in Laravel & Vue.</p>
 
       <div class="flex justify-center lg:justify-start">
-        <button class="w-50 sm:w-auto mt-8 bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">Let's work together</button>
+        <nuxt-link to="/contact" class="contact-btn w-50 no-underline sm:w-auto mt-8 bg-blue-darker shadow-md hover:bg-blue-darkest text-white font-bold py-2 px-4 focus:outline-none focus:shadow-lg rounded hover:shadow-lg">Let's work together</nuxt-link>
       </div>
     </div>
   </div>
@@ -20,3 +20,13 @@
 
     }
 </script>
+
+<style scoped>
+  .contact-btn {
+    -webkit-transition: border-color .3s, box-shadow .3s;
+    -moz-transition: border-color .3s, box-shadow .3s;
+    -ms-transition: border-color .3s, box-shadow .3s;
+    -o-transition: border-color .3s, box-shadow .3s;
+    transition: border-color .3s, box-shadow .3s;
+  }
+</style>

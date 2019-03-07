@@ -1,19 +1,83 @@
 <template>
   <div class="container-fluid flex justify-center p-3">
-    <form class="w-full max-w-md mt-8">
-      <h1>Get in touch with me</h1>
-      <div class="flex flex-wrap -mx-3 mb-6 mt-16">
-        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
-            First Name
+    <form @submit.prevent="submitForm" class="w-full max-w-md mt-2">
+      <h1 class="text-blue-darker block sm:flex items-center">Get in touch with me <p class="text-sm mt-2 mt-0 sm:ml-6">
+        No recruiters, please.</p></h1>
+      <div class="flex flex-wrap -mx-3 mb-6 mt-8">
+        <div class="w-full px-3">
+          <label
+            :class="{'text-red': errors.full_name, 'text-grey-darker': !errors.full_name}"
+            class="block uppercase tracking-wide text-xs font-bold mb-2"
+            for="full-name">
+            Full Name
           </label>
-          <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane">
+          <input
+            :class="{'border-red': errors.full_name, 'border-grey': !errors.full_name}"
+            class="appearance-none focus:shadow-lg block w-full text-grey-darker border border-grey rounded p-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey-darker shadow-md"
+            id="full-name"
+            placeholder="Jane Doe" type="text" v-model="contact.name">
         </div>
-        <div class="w-full md:w-1/2 px-3">
-          <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
-            Last Name
+        <div class="w-full mt-8 px-3">
+          <label
+            :class="{'text-red': errors.email_address, 'text-grey-darker': !errors.email_address}"
+            class="block uppercase focus:shadow-lg tracking-wide text-xs font-bold mb-2"
+            for="email">
+            Email Address
           </label>
-          <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-last-name" type="text" placeholder="Doe">
+          <input
+            :class="{'border-red': errors.email_address, 'border-grey': !errors.email_address}"
+            class="appearance-none focus:shadow-lg block w-full text-grey-darker border border-grey rounded p-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey-darker shadow-md"
+            id="email"
+            placeholder="jane.doe@example.com" type="email" v-model="contact.email">
+        </div>
+        <div class="w-full mt-8 px-3">
+          <label class="block uppercase tracking-wide text-xs font-bold mb-2">
+            What's this about?
+          </label>
+          <p
+            :class="{'bg-blue-darker text-white shadow-md': reason.state, 'text-grey-darkest': !reason.state,}"
+            @click.prevent="reason.state = !reason.state"
+            @keyup.13.prevent="reason.state = !reason.state"
+            @keyup.32.prevent="reason.state = !reason.state"
+            class="enquiry-option mr-2 w-full block sm:w-auto sm:inline-block cursor-pointer my-2 bg-transparent font-semibold focus:outline-none focus:shadow-lg shadow-md hover:shadow-lg py-2 px-4 border border-grey-darkest rounded"
+            tabindex="0"
+            v-for="(reason) in contact.enquiry_types">
+            {{ reason.text }}
+          </p>
+        </div>
+        <div class="w-full mt-6 px-3">
+          <label
+            :class="{'text-red': errors.more_details, 'text-grey-darker': !errors.more_details}"
+            class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="more-details">
+            Anything else to add?</label>
+          <textarea
+            :class="{'border-red': errors.more_details, 'border-grey': !errors.more_details}"
+            class="appearance-none block w-full h-32 text-grey-darker border rounded p-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey-darker focus:shadow-lg shadow-md resize-none"
+            id="more-details"
+            placeholder="Some very important information"
+            v-model="contact.message">Hello</textarea>
+        </div>
+        <div class="w-full px-3">
+          <button
+            class="w-full sm:w-auto mt-8 bg-blue-darker hover:bg-blue-darkest text-white font-bold py-2 px-4 rounded shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg">
+            Get in
+            touch
+          </button>
+          <p class="w-full mt-4 ml-0 sm:ml-8 inline-block sm:w-auto text-blue-darker font-bold rounded"
+             v-if="formSubmitting">
+            Sending...
+          </p>
+          <p class="w-full mt-4 ml-0 sm:ml-8 inline-block sm:w-auto text-blue-darker font-bold rounded"
+             v-if="formSubmitted">
+            Message sent!
+          </p>
+          <p class="w-full mt-4 ml-0 sm:ml-8 inline-block sm:w-auto text-red font-bold rounded"
+             v-if="formFailed">
+            Message failed to send, please try again later.
+          </p>
+          <p class="w-full mt-4 ml-0 sm:ml-8 inline-block sm:w-auto text-red font-bold rounded" v-if="hasErrors">
+            Please correct the errors above
+          </p>
         </div>
       </div>
     </form>
@@ -21,7 +85,141 @@
 </template>
 
 <script>
-  export default {
+    export default {
+        data() {
+            return {
+                hasErrors: false,
+                formSubmitting: false,
+                formSubmitted: false,
+                formFailed: false,
 
-  }
+                errors: {
+                    full_name: false,
+                    email_address: false,
+                    enquiry_types: false,
+                    more_details: false,
+                },
+
+                contact: {
+                    name: "",
+                    email: "",
+                    message: "",
+                    enquiry_types: [
+                        {type: "general_enquiry", state: true, text: "General Enquiry"},
+                        {type: "web_development", state: false, text: "Web Development"},
+                        {type: "freelancing", state: false, text: "Freelancing"},
+                        {type: "full_time", state: false, text: "Full-Time"}
+                    ]
+                }
+            }
+        },
+
+        methods: {
+            log(args) {
+                console.log(args);
+            },
+
+            submitForm() {
+                if (this.formSubmitting || this.formSubmitted) {
+                    return;
+                }
+
+                if (this.setErrors()) {
+                    this.hasErrors = true;
+                    this.formSubmitting = false;
+
+                    return;
+                } else {
+                    this.hasErrors = false;
+                    this.formSubmitting = true;
+                }
+
+                if (!this.hasErrors) {
+                    let request = new Request('https://welford.me/contact', {
+                        method: "POST",
+                        body: JSON.stringify(this.contact)
+                    });
+
+                    fetch(request)
+                        .then(response => response.json())
+                        .then(json => {
+                            this.formSubmitting = false;
+                            this.formSubmitted = true;
+                            this.clearForm();
+
+                            setTimeout(() => {
+                                this.formSubmitted = false;
+                            }, 3500);
+                        }).catch(() => {
+                            this.formSubmitted = false;
+                            this.formSubmitting = false;
+                            this.formFailed = true;
+
+                            setTimeout(() => {
+                                this.formFailed = false;
+                            }, 3500);
+                    });
+                }
+
+            },
+
+            setErrors() {
+                if (this.contact.name.trim().length === 0) {
+                    this.errors.full_name = true;
+                } else {
+                    this.errors.full_name = false;
+                }
+
+                if (this.contact.email.trim().length === 0) {
+                    this.errors.email_address = true;
+                } else {
+                    this.errors.email_address = false;
+                }
+
+                if (this.contact.message.trim().length === 0) {
+                    this.errors.more_details = true;
+                } else {
+                    this.errors.more_details = false;
+                }
+
+                return this.errors.name || this.errors.email || this.errors.enquiry_types || this.errors.more_details;
+            },
+
+            clearForm() {
+                this.contact.more_details = "";
+                this.contact.email_address = "";
+                this.contact.full_name = "";
+                this.contact.enquiry_types = [
+                    {type: "general_enquiry", state: true, text: "General Enquiry"},
+                    {type: "web_development", state: false, text: "Web Development"},
+                    {type: "freelancing", state: false, text: "Freelancing"},
+                    {type: "full_time", state: false, text: "Full-Time"}
+                ];
+            }
+        },
+
+        head() {
+            return {
+                title: "Contact"
+            }
+        }
+    }
 </script>
+
+<style scoped>
+  input[type="text"], input[type="email"], textarea {
+    -webkit-transition: border-color .3s, box-shadow .3s;
+    -moz-transition: border-color .3s, box-shadow .3s;
+    -ms-transition: border-color .3s, box-shadow .3s;
+    -o-transition: border-color .3s, box-shadow .3s;
+    transition: border-color .3s, box-shadow .3s;
+  }
+
+  p.enquiry-option, button {
+    -webkit-transition: background-color .3s, box-shadow .3s;
+    -moz-transition: background-color .3s, box-shadow .3s;
+    -ms-transition: background-color .3s, box-shadow .3s;
+    -o-transition: background-color .3s, box-shadow .3s;
+    transition: background-color .3s, box-shadow .3s;
+  }
+</style>
