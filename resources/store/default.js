@@ -4,7 +4,7 @@ export const state = () => ({
 
 export const mutations = {
     initialTheme(state) {
-        state.theme = localStorage.hasOwnProperty('jw-theme') ? localStorage.getItem('jw-theme') : 'light';
+        state.theme = localStorage.hasOwnProperty('jw-theme') ? localStorage.getItem('jw-theme') : state.theme;
     },
 
     toggleTheme(state) {
