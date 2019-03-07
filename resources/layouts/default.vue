@@ -3,8 +3,19 @@
 </template>
 
 <script>
+    import { mapMutations } from 'vuex'
     import NavBar from "../components/NavBar";
     export default {
-        components: {NavBar}
+        components: {NavBar},
+
+        mounted() {
+            this.initialTheme();
+        },
+
+        methods: {
+            ...mapMutations({
+                initialTheme: 'default/initialTheme'
+            }),
+        }
     }
 </script>

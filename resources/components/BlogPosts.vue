@@ -4,14 +4,15 @@
       class="blog-post-card no-underline max-w-sm rounded overflow-hidden shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg m-4 sm:w-full md:w-1/3 lg:w-1/4 xl:w-1/4 cursor-pointer"
       tabindex="0"
       v-for="post in posts"
-      :key="post.id"
-      @click="loadPost(post)"
-      @keyup.32.prevent="loadPost(post)"
-      @keyup.13.prevent="loadPost(post)">
-      <img class="w-full" v-bind:src="post.intro_image" alt="Sunset in the mountains">
+      :key="post.id">
+      <img class="w-full h-64" v-bind:src="post.intro_image" alt="Sunset in the mountains">
       <div class="px-6 py-4">
-        <div class="font-bold text-lg mb-5 text-grey-darkest">{{ post.title }}</div>
-        <p class="text-grey-darker text-base no-underline">
+        <div
+          :class="{'text-white': theme() === 'dark'}"
+          class="font-bold text-lg mb-5 text-grey-darkest">{{ post.title }}</div>
+        <p
+          :class="{'text-white': theme() === 'dark'}"
+          class="text-grey-darker text-base no-underline">
           {{ post.intro_text }}
         </p>
       </div>
@@ -26,6 +27,7 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
 
     export default {
         name: 'blog-posts',
@@ -41,13 +43,9 @@
         },
 
         methods: {
-            logKey(e) {
-                console.log(e.keyCode);
-            },
-
-            loadPost(post) {
-                console.log('Loading post...', post);
-            }
+            ...mapGetters({
+                theme: 'default/theme'
+            })
         }
     }
 </script>

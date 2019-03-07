@@ -22,6 +22,17 @@
           </nuxt-link>
         </div>
         <div>
+          <p class="nav-btn inline-block text-sm px-4 py-2 leading-none text-white no-underline hover:border-transparent mt-4 lg:mt-0 mr-4 flex items-center">
+            <span class="mr-2">Dark Mode</span>
+            <span
+              @click="toggleTheme"
+              :class="{'justify-start': currentTheme() === 'light', 'justify-end bg-green': currentTheme() === 'dark'}"
+              class="border rounded-full border-grey flex items-center cursor-pointer w-12">
+              <span class="rounded-full border w-6 h-6 border-grey shadow-inner bg-white shadow"></span>
+            </span>
+          </p>
+        </div>
+        <div>
           <nuxt-link ref="login" @click.native="navOpen = false" to="/login" class="nav-btn inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Login</nuxt-link>
         </div>
       </div>
@@ -32,6 +43,8 @@
 </template>
 
 <script>
+  import { mapMutations, mapGetters } from 'vuex'
+
   export default {
       name: 'nav-bar',
 
@@ -55,6 +68,16 @@
           return {
               navOpen: false
           }
+      },
+
+      methods: {
+          ...mapMutations({
+              toggleTheme: 'default/toggleTheme'
+          }),
+
+          ...mapGetters({
+              currentTheme: 'default/theme'
+          })
       }
   }
 </script>

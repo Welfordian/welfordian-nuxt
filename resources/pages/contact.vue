@@ -1,12 +1,16 @@
 <template>
-  <div class="container-fluid flex justify-center p-3 mt-24">
+  <div
+    :class="{'bg-blue-darkest': theme() === 'dark'}"
+    class="container-fluid m-auto height-screen h-screen pt-24 flex justify-center px-4">
     <form @submit.prevent="submitForm" class="w-full max-w-md mt-2">
-      <h1 class="text-blue-darker block sm:flex items-center">Get in touch with me <p class="text-sm mt-2 mt-0 sm:ml-6">
+      <h1
+        :class="{'text-white': theme() === 'dark', 'text-blue-darker': theme() === 'light'}"
+        class="block sm:flex items-center">Get in touch with me <p class="text-sm mt-2 mt-0 sm:ml-6">
         No recruiters, please.</p></h1>
-      <div class="flex flex-wrap -mx-3 mb-6 mt-8">
+      <div class="flex flex-wrap -mx-3 mt-8">
         <div class="w-full px-3">
           <label
-            :class="{'text-red': errors.full_name, 'text-grey-darker': !errors.full_name}"
+            :class="{'text-red': errors.full_name, 'text-grey-darker': (!errors.full_name && theme() === 'light'), 'text-white': (!errors.full_name && theme() === 'dark')}"
             class="block uppercase tracking-wide text-xs font-bold mb-2"
             for="full-name">
             Full Name
@@ -19,7 +23,7 @@
         </div>
         <div class="w-full mt-8 px-3">
           <label
-            :class="{'text-red': errors.email_address, 'text-grey-darker': !errors.email_address}"
+            :class="{'text-red': errors.email_address, 'text-grey-darker': (!errors.email_address && theme() === 'light'), 'text-white': (!errors.email_address && theme() === 'dark')}"
             class="block uppercase focus:shadow-lg tracking-wide text-xs font-bold mb-2"
             for="email">
             Email Address
@@ -31,15 +35,17 @@
             placeholder="jane.doe@example.com" type="email" v-model="contact.email">
         </div>
         <div class="w-full mt-8 px-3">
-          <label class="block uppercase tracking-wide text-xs font-bold mb-2">
+          <label
+            :class="{'text-white': theme() === 'dark', 'text-grey-darker': theme() === 'light'}"
+            class="block uppercase tracking-wide text-xs font-bold mb-2">
             What's this about?
           </label>
           <p
-            :class="{'bg-blue-darker text-white shadow-md': reason.state, 'text-grey-darkest': !reason.state,}"
+            :class="{'bg-blue-darker text-white shadow-md': (reason.state && theme() === 'light'), 'bg-blue text-white shadow-md': (reason.state && theme() === 'dark'), 'text-grey-darkest': !reason.state, 'border-grey-darkest': theme() === 'light', 'border-grey-light': theme() === 'dark'}"
             @click.prevent="reason.state = !reason.state"
             @keyup.13.prevent="reason.state = !reason.state"
             @keyup.32.prevent="reason.state = !reason.state"
-            class="enquiry-option mr-2 w-full block sm:w-auto sm:inline-block cursor-pointer my-2 bg-transparent font-semibold focus:outline-none focus:shadow-lg shadow-md hover:shadow-lg py-2 px-4 border border-grey-darkest rounded"
+            class="enquiry-option mr-2 w-full block sm:w-auto sm:inline-block cursor-pointer my-2 bg-transparent font-semibold focus:outline-none focus:shadow-lg shadow-md hover:shadow-lg py-2 px-4 border rounded"
             tabindex="0"
             v-for="(reason) in contact.enquiry_types">
             {{ reason.text }}
@@ -47,11 +53,11 @@
         </div>
         <div class="w-full mt-6 px-3">
           <label
-            :class="{'text-red': errors.more_details, 'text-grey-darker': !errors.more_details}"
+            :class="{'text-red': errors.more_details, 'text-grey-darker': (!errors.more_details && theme() === 'light'), 'text-white': (!errors.more_details && theme() === 'dark')}"
             class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="more-details">
             Anything else to add?</label>
           <textarea
-            :class="{'border-red': errors.more_details, 'border-grey': !errors.more_details}"
+            :class="{'border-red': errors.more_details, 'border-grey': (!errors.more_details && theme() === 'light'), 'border-white': (!errors.more_details && theme() === 'dark')}"
             class="appearance-none block w-full h-32 text-grey-darker border rounded p-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey-darker focus:shadow-lg shadow-md resize-none"
             id="more-details"
             placeholder="Some very important information"
@@ -59,7 +65,8 @@
         </div>
         <div class="w-full px-3">
           <button
-            class="w-full sm:w-auto mt-8 bg-blue-darker hover:bg-blue-darkest text-white font-bold py-2 px-4 rounded shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg">
+            :class="{'hover:bg-blue-darkest': theme() === 'light', 'hover:bg-blue': theme() === 'dark'}"
+            class="w-full sm:w-auto mt-8 bg-blue-darker text-white font-bold py-2 px-4 rounded shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg">
             Get in
             touch
           </button>
@@ -85,6 +92,8 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
+
     export default {
         data() {
             return {
@@ -115,9 +124,9 @@
         },
 
         methods: {
-            log(args) {
-                console.log(args);
-            },
+            ...mapGetters({
+                theme: 'default/theme'
+            }),
 
             submitForm() {
                 if (this.formSubmitting || this.formSubmitted) {

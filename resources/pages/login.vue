@@ -1,10 +1,13 @@
 <template>
-  <div class="container-fluid flex justify-center p-3 mt-24">
+  <div
+    :class="{'bg-blue-darkest': theme() === 'dark'}"
+    class="container-fluid m-auto pb-24 pt-24 flex justify-center sm:mt-18 px-4 h-screen">
     <form class="w-full max-w-md mt-2" @submit.prevent="submitForm">
-      <h1 class="text-blue-darker">Login</h1>
+      <h1 :class="{'text-blue-darker': theme() === 'light', 'text-white': theme() === 'dark'}">Login</h1>
       <div class="flex flex-wrap -mx-3 mb-6 mt-8">
         <div class="w-full px-3">
           <label
+            :class="{'text-white': theme() === 'dark'}"
             class="block uppercase tracking-wide text-xs font-bold mb-2"
             for="username">
             Username
@@ -17,6 +20,7 @@
         </div>
         <div class="w-full mt-8 px-3">
           <label
+            :class="{'text-white': theme() === 'dark'}"
             class="block uppercase tracking-wide text-xs font-bold mb-2"
             for="email">
             Password
@@ -28,7 +32,9 @@
             placeholder="Password">
         </div>
         <div class="w-ful px-3">
-          <button class="w-full shadow-md hover:shadow-lg focus:outline-none focus:shadow-lg sm:w-auto mt-8 bg-blue-darker hover:bg-blue-darkest text-white font-bold py-2 px-4 rounded">
+          <button
+            :class="{'hover:bg-blue-darkest': theme() === 'light', 'hover:bg-blue': theme() === 'dark'}"
+            class="w-full shadow-md hover:shadow-lg focus:outline-none focus:shadow-lg sm:w-auto mt-8 bg-blue-darker text-white font-bold py-2 px-4 rounded">
             Let's go, baby!
           </button>
         </div>
@@ -38,6 +44,8 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
+
     export default {
         data() {
             return {
@@ -52,6 +60,10 @@
         },
 
         methods: {
+            ...mapGetters({
+                theme: 'default/theme'
+            }),
+
             submitForm() {
                 if (this.setErrors()) {
                     this.hasErrors = true;
@@ -91,10 +103,10 @@
 
 <style scoped>
   input[type="text"], input[type="password"], button {
-    -webkit-transition: border-color .3s, box-shadow .3s;
-    -moz-transition: border-color .3s, box-shadow .3s;
-    -ms-transition: border-color .3s, box-shadow .3s;
-    -o-transition: border-color .3s, box-shadow .3s;
-    transition: border-color .3s, box-shadow .3s;
+    -webkit-transition: border-color .3s, box-shadow .3s, background-color .3s;
+    -moz-transition: border-color .3s, box-shadow .3s, background-color .3s;
+    -ms-transition: border-color .3s, box-shadow .3s, background-color .3s;
+    -o-transition: border-color .3s, box-shadow .3s, background-color .3s;
+    transition: border-color .3s, box-shadow .3s, background-color .3s;
   }
 </style>
