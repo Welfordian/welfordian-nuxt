@@ -65,8 +65,8 @@
         </div>
         <div class="w-full px-3">
           <button
-            :class="{'hover:bg-blue-darkest': theme() === 'light', 'hover:bg-blue': theme() === 'dark'}"
-            class="w-full sm:w-auto mt-8 bg-blue-darker text-white font-bold py-2 px-4 rounded shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg">
+            :class="{'hover:bg-blue-darkest text-white bg-blue-darker': theme() === 'light', 'bg-white hover:bg-grey-light text-blue-darkest': theme() === 'dark'}"
+            class="w-full sm:w-auto mt-8 font-bold py-2 px-4 rounded shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg">
             Get in
             touch
           </button>
