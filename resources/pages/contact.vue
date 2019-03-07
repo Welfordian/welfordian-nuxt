@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid flex justify-center p-3">
+  <div class="container-fluid flex justify-center p-3 mt-24">
     <form @submit.prevent="submitForm" class="w-full max-w-md mt-2">
       <h1 class="text-blue-darker block sm:flex items-center">Get in touch with me <p class="text-sm mt-2 mt-0 sm:ml-6">
         No recruiters, please.</p></h1>

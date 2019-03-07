@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="flex items-center justify-between flex-wrap bg-blue-darker p-3 mb-6">
+    <nav class="flex items-center justify-between flex-wrap bg-blue-darker p-3 mb-6 shadow-lg fixed w-full pin-t">
       <div class="flex items-center flex-no-shrink text-white mr-6">
         <span class="font-semibold text-xl tracking-tight">Joshua Welford</span>
       </div>

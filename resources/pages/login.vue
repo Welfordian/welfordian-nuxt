@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid flex justify-center p-3">
+  <div class="container-fluid flex justify-center p-3 mt-24">
     <form class="w-full max-w-md mt-2" @submit.prevent="submitForm">
       <h1 class="text-blue-darker">Login</h1>
       <div class="flex flex-wrap -mx-3 mb-6 mt-8">

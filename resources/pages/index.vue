@@ -1,10 +1,8 @@
 <template>
-  <div class="container-fluid m-auto mb-8">
+  <div class="container-fluid m-auto mb-8 mt-24">
     <header-hero></header-hero>
 
     <blog-posts></blog-posts>
-
-
 
     <app-footer></app-footer>
   </div>
