@@ -11,18 +11,18 @@
       </div>
       <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto" :class="navOpen ? 'block': 'hidden'">
         <div class="text-sm lg:flex-grow">
-          <nuxt-link @click.native="navOpen = false" to="/" class="nav-link block mt-4 lg:inline-block lg:mt-0 hover:text-white mr-4" :class="{'text-white no-underline': $route.name == 'index', 'text-blue-lighter': $route.name !== 'index'}">
+          <nuxt-link ref="index" @click.native="navOpen = false" to="/" class="nav-link block mt-4 lg:inline-block lg:mt-0 hover:text-white mr-4" :class="{'text-white no-underline': $route.name == 'index', 'text-blue-lighter': $route.name !== 'index'}">
             Blog
           </nuxt-link>
           <!--<nuxt-link @click.native="navOpen = false" to="#responsive-header" class="nav-link block mt-4 lg:inline-block lg:mt-0 text-blue-lighter hover:text-white mr-4">
             Photography
           </nuxt-link>-->
-          <nuxt-link @click.native="navOpen = false" to="/contact" class="nav-link block mt-4 lg:inline-block lg:mt-0 hover:text-white" :class="{'text-white no-underline': $route.name == 'contact', 'text-blue-lighter': $route.name !== 'contact'}">
+          <nuxt-link ref="contact" @click.native="navOpen = false" to="/contact" class="nav-link block mt-4 lg:inline-block lg:mt-0 hover:text-white" :class="{'text-white no-underline': $route.name == 'contact', 'text-blue-lighter': $route.name !== 'contact'}">
             Contact
           </nuxt-link>
         </div>
         <div>
-          <nuxt-link @click.native="navOpen = false" to="/login" class="nav-btn inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Login</nuxt-link>
+          <nuxt-link ref="login" @click.native="navOpen = false" to="/login" class="nav-btn inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Login</nuxt-link>
         </div>
       </div>
     </nav>
@@ -34,6 +34,22 @@
 <script>
   export default {
       name: 'nav-bar',
+
+      mounted() {
+          document.onkeydown = (e) => {
+              if ((e.metaKey || e.ctrlKey) && (e.key === "1" || e.key === "2" || e.key === "3")) {
+                  let map = {
+                      "1": "/",
+                      "2": "contact",
+                      "3": "login"
+                  };
+
+                  e.preventDefault();
+
+                  this.$router.push({path: map[e.key]});
+              }
+          }
+      },
 
       data() {
           return {

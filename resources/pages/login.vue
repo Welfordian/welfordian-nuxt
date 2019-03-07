@@ -79,6 +79,12 @@
 
                 return this.errors.username || this.errors.password;
             }
+        },
+
+        head() {
+            return {
+                title: "Login"
+            }
         }
     }
 </script>
