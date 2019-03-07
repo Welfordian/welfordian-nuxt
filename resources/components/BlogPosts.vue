@@ -1,10 +1,11 @@
 <template>
   <div class="flex flex-row flex-wrap content-center justify-center">
     <nuxt-link :to="{ name: 'post', params: { post: post.slug, full_post: post }}"
-      class="blog-post-card no-underline max-w-sm rounded overflow-hidden shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg m-4 sm:w-full md:w-1/3 lg:w-1/4 xl:w-1/4 cursor-pointer"
-      tabindex="0"
-      v-for="post in posts"
-      :key="post.id">
+               :class="{'bg-blue-darker': theme() === 'dark'}"
+               class="blog-post-card no-underline max-w-sm rounded overflow-hidden shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg m-4 sm:w-full md:w-1/3 lg:w-1/4 xl:w-1/4 cursor-pointer"
+               tabindex="0"
+               v-for="post in posts"
+               :key="post.id">
       <img class="w-full h-64" v-bind:src="post.intro_image" alt="Sunset in the mountains">
       <div class="px-6 py-4">
         <div

@@ -14,9 +14,9 @@
 
       <div class="flex justify-center lg:justify-start">
         <nuxt-link
-          :class="{'hover:bg-blue': theme() === 'dark', 'hover:bg-blue-darkest': theme() === 'light'}"
+          :class="{'bg-white hover:bg-grey-light text-blue-darkest': theme() === 'dark', 'bg-blue-darker hover:bg-blue-darkest text-white': theme() === 'light'}"
           to="/contact"
-          class="contact-btn w-50 no-underline sm:w-auto mt-8 bg-blue-darker shadow-md text-white font-bold py-2 px-4 focus:outline-none focus:shadow-lg rounded hover:shadow-lg">Let's work together</nuxt-link>
+          class="contact-btn w-50 no-underline sm:w-auto mt-8 shadow-md font-bold py-2 px-4 focus:outline-none focus:shadow-lg rounded hover:shadow-lg">Let's work together</nuxt-link>
       </div>
     </div>
   </div>
