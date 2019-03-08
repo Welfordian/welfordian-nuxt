@@ -78,9 +78,9 @@ module.exports = {
         strategies: {
             local: {
                 endpoints: {
-                    login: { url: '/api/v1/auth/login', method: 'post', propertyName: 'token' },
+                    login: { url: 'https://welford.me/api/v1/auth/login', method: 'post', propertyName: 'token' },
                     logout: false,
-                    user: { url: '/api/v1/auth/me', method: 'get', propertyName: 'user' }
+                    user: { url: 'https://welford.me/api/v1/auth/me', method: 'get', propertyName: 'user' }
                 },
             }
         }
