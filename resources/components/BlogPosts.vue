@@ -17,12 +17,6 @@
           {{ post.intro_text }}
         </p>
       </div>
-      <div class="px-6 py-4">
-        <span class="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darkest mr-2">#laravel</span>
-        <span class="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darkest mr-2">#nginx</span>
-        <span
-          class="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darkest">#auth</span>
-      </div>
     </nuxt-link>
   </div>
 
@@ -39,7 +33,7 @@
         name: 'blog-posts',
         components: {LoadingSpinner},
         async mounted() {
-            this.posts = await (await fetch(new Request('https://api.welford.me/posts'))).json();
+            this.posts = await (await fetch(new Request('/api/v1/posts'))).json();
         },
 
         data() {

@@ -206,6 +206,20 @@
             }
         },
 
+        watch: {
+            'contact.enquiry_types': {
+                handler() {
+                    let active = this.contact.enquiry_types.filter((enquiry_type) => { return enquiry_type.state === true; });
+
+                    if (active.length === 0) {
+                        this.contact.enquiry_types[0].state = true;
+                    }
+                },
+
+                deep: true
+            }
+        },
+
         head() {
             return {
                 title: "Contact"

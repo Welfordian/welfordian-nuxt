@@ -15,4 +15,8 @@
 
 const Route = use('Route')
 
+Route.group(() => {
+    Route.get('posts', 'PostsController.list');
+}).prefix('api/v1');
+
 Route.any('*', 'NuxtController.render')
