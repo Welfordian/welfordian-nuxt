@@ -40,16 +40,17 @@
             class="block uppercase tracking-wide text-xs font-bold mb-2">
             What's this about?
           </label>
-          <p
-            :class="{'bg-blue-darker text-white shadow-md': (reason.state && theme() === 'light'), 'bg-white text-blue-darkest shadow-md hover:bg-grey-light': (reason.state && theme() === 'dark'), 'text-grey-darkest': !reason.state, 'border-grey-darkest': theme() === 'light', 'border-grey-light text-white': theme() === 'dark'}"
-            @click.prevent="reason.state = !reason.state"
-            @keyup.13.prevent="reason.state = !reason.state"
-            @keyup.32.prevent="reason.state = !reason.state"
+          <app-button tag="p"
             class="enquiry-option mr-2 w-full block sm:w-auto sm:inline-block cursor-pointer my-2 bg-transparent font-semibold focus:outline-none focus:shadow-lg shadow-md hover:shadow-lg py-2 px-4 border rounded"
+            @click.native.prevent="reason.state = !reason.state"
+            @keyup.native.13.prevent="reason.state = !reason.state"
+            @keyup.native.32.prevent="reason.state = !reason.state"
             tabindex="0"
+            :key="reason.type"
+            :active="reason.state"
             v-for="(reason) in contact.enquiry_types">
             {{ reason.text }}
-          </p>
+          </app-button>
         </div>
         <div class="w-full mt-6 px-3">
           <label

@@ -14,6 +14,9 @@
           <nuxt-link ref="index" @click.native="navOpen = false" to="/" class="nav-link block mt-4 lg:inline-block lg:mt-0 hover:text-white mr-4" :class="{'text-white no-underline': $route.name == 'index', 'text-blue-lighter': $route.name !== 'index'}">
             Blog
           </nuxt-link>
+          <!--<nuxt-link ref="hire" @click.native="navOpen = false" to="/hire" class="nav-link block mt-4 lg:inline-block lg:mt-0 hover:text-white mr-4" :class="{'text-white no-underline': $route.name == 'hire', 'text-blue-lighter': $route.name !== 'hire'}">
+            Hire Me
+          </nuxt-link>-->
           <!--<nuxt-link @click.native="navOpen = false" to="#responsive-header" class="nav-link block mt-4 lg:inline-block lg:mt-0 text-blue-lighter hover:text-white mr-4">
             Photography
           </nuxt-link>-->

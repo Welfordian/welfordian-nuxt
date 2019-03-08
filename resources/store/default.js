@@ -13,7 +13,7 @@ export const mutations = {
             localStorage.setItem('jw-theme', 'dark');
         } else {
             state.theme = 'light';
-            localStorage.removeItem('jw-theme');
+            localStorage.setItem('jw-theme', 'light');
         }
     }
 }
