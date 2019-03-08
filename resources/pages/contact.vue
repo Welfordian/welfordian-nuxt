@@ -41,7 +41,7 @@
             What's this about?
           </label>
           <p
-            :class="{'bg-blue-darker text-white shadow-md': (reason.state && theme() === 'light'), 'bg-blue text-white shadow-md': (reason.state && theme() === 'dark'), 'text-grey-darkest': !reason.state, 'border-grey-darkest': theme() === 'light', 'border-grey-light': theme() === 'dark'}"
+            :class="{'bg-blue-darker text-white shadow-md': (reason.state && theme() === 'light'), 'bg-white text-blue-darkest shadow-md hover:bg-grey-light': (reason.state && theme() === 'dark'), 'text-grey-darkest': !reason.state, 'border-grey-darkest': theme() === 'light', 'border-grey-light text-white': theme() === 'dark'}"
             @click.prevent="reason.state = !reason.state"
             @keyup.13.prevent="reason.state = !reason.state"
             @keyup.32.prevent="reason.state = !reason.state"
