@@ -14,7 +14,7 @@
               'bg-white': (theme() === 'dark' && type === 'default' && active),
               'hover:bg-grey-light hover:shadow-lg': (theme() === 'dark' && !noHover),
               'inline-block no-underline': tag === 'nuxt-link'}"
-    class="sm:w-auto font-bold py-2 px-4 rounded shadow-md focus:shadow-lg focus:outline-none">
+    class="app-button sm:w-auto font-bold py-2 px-4 rounded shadow-md focus:shadow-lg focus:outline-none">
 
     <slot></slot>
 
@@ -56,11 +56,15 @@
                 theme: 'default/theme'
             }),
         },
-
-        computed: {
-            buttonHoverClass() {
-
-            }
-        }
     }
 </script>
+
+<style scoped>
+  .app-button {
+    -webkit-transition: border-color .3s, box-shadow .3s, background-color .3s;
+    -moz-transition: border-color .3s, box-shadow .3s, background-color .3s;
+    -ms-transition: border-color .3s, box-shadow .3s, background-color .3s;
+    -o-transition: border-color .3s, box-shadow .3s, background-color .3s;
+    transition: border-color .3s, box-shadow .3s, background-color .3s;
+  }
+</style>

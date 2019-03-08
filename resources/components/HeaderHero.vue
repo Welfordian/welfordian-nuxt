@@ -31,13 +31,3 @@
       }
     }
 </script>
-
-<style scoped>
-  .contact-btn {
-    -webkit-transition: border-color .3s, box-shadow .3s, background-color .3s;
-    -moz-transition: border-color .3s, box-shadow .3s, background-color .3s;
-    -ms-transition: border-color .3s, box-shadow .3s, background-color .3s;
-    -o-transition: border-color .3s, box-shadow .3s, background-color .3s;
-    transition: border-color .3s, box-shadow .3s, background-color .3s;
-  }
-</style>

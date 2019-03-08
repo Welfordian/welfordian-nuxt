@@ -1,10 +1,23 @@
 <template>
-  <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  <div class="lds-ellipsis">
+    <div :class="{'bg-white': theme() === 'dark', 'bg-blue-darker': theme() === 'light'}"></div>
+    <div :class="{'bg-white': theme() === 'dark', 'bg-blue-darker': theme() === 'light'}"></div>
+    <div :class="{'bg-white': theme() === 'dark', 'bg-blue-darker': theme() === 'light'}"></div>
+    <div :class="{'bg-white': theme() === 'dark', 'bg-blue-darker': theme() === 'light'}"></div>
+  </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+
   export default {
-      name: 'loading-spinner'
+      name: 'loading-spinner',
+
+      methods: {
+          ...mapGetters({
+              'theme': 'default/theme'
+          })
+      }
   }
 </script>
 
@@ -21,7 +34,6 @@
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background: #fff;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
   .lds-ellipsis div:nth-child(1) {

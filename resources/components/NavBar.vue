@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="flex items-center justify-between flex-wrap bg-blue-darker p-3 mb-6 shadow-lg fixed w-full pin-t">
+    <nav class="flex items-center justify-between flex-wrap bg-blue-darker p-3 mb-6 shadow-lg fixed w-full pin-t z-10">
       <div class="flex items-center flex-no-shrink text-white mr-6">
         <span class="font-semibold text-xl tracking-tight">Joshua Welford</span>
       </div>
@@ -23,12 +23,12 @@
           <nuxt-link ref="contact" @click.native="navOpen = false" to="/contact" class="nav-link block mt-4 lg:inline-block lg:mt-0 hover:text-white" :class="{'text-white no-underline': $route.name == 'contact', 'text-blue-lighter': $route.name !== 'contact'}">
             Contact
           </nuxt-link>
+          <nuxt-link v-if="$auth.loggedIn" ref="contact" @click.native="navOpen = false" to="/dashboard" class="ml-4 nav-link block mt-4 lg:inline-block lg:mt-0 hover:text-white" :class="{'text-white no-underline': $route.name == 'dashboard', 'text-blue-lighter': $route.name !== 'dashboard'}">Dashboard</nuxt-link>
         </div>
         <div>
-          <p class="nav-btn inline-block text-sm leading-none text-white no-underline hover:border-transparent mt-4 lg:mt-0 mr-4 flex items-center">
-            <span class="mr-2">Dark Mode</span>
+          <p class="nav-btn inline-block text-sm leading-none text-white no-underline hover:border-transparent mt-4 lg:mt-0 mr-4 flex items-center" @click="toggleTheme">
+            <span class="mr-2 cursor-pointer">Dark Mode</span>
             <span
-              @click="toggleTheme"
               :class="{'justify-start': currentTheme() === 'light', 'justify-end bg-green': currentTheme() === 'dark'}"
               class="border rounded-full border-grey flex items-center cursor-pointer w-12">
               <span class="rounded-full border w-6 h-6 border-grey shadow-inner bg-white shadow"></span>
@@ -36,7 +36,12 @@
           </p>
         </div>
         <div>
-          <nuxt-link ref="login" @click.native="navOpen = false" to="/login" class="nav-btn inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Login</nuxt-link>
+          <template v-if="$auth.loggedIn">
+            <button @click.prevent="$auth.logout" class="nav-btn inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Logout</button>
+          </template>
+          <template v-else>
+            <nuxt-link ref="login" @click.native="navOpen = false" to="/login" class="nav-btn inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Login</nuxt-link>
+          </template>
         </div>
       </div>
     </nav>

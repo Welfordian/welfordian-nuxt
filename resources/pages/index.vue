@@ -12,6 +12,7 @@
 
 <script>
     import { mapGetters } from 'vuex'
+    import { eventBus } from "../eventBus";
 
     import HeaderHero from "../components/HeaderHero";
     import BlogPosts from "../components/BlogPosts";
@@ -24,6 +25,12 @@
             ...mapGetters({
                 currentTheme: 'default/theme'
             })
+        },
+
+        beforeRouteEnter(to, from, next) {
+            eventBus.$emit('routeChange', to.fullPath);
+
+            next();
         }
     }
 </script>

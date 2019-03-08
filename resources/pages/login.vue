@@ -9,25 +9,27 @@
           <label
             :class="{'text-white': theme() === 'dark'}"
             class="block uppercase tracking-wide text-xs font-bold mb-2"
-            for="username">
-            Username
+            for="email">
+            Email
           </label>
           <input
             type="text"
-            placeholder="Username"
-            id="username"
+            placeholder="Email"
+            v-model="email"
+            id="email"
             class="appearance-none block w-full text-grey-darker border border-grey rounded p-4 px-4 leading-tight focus:outline-none focus:shadow-lg focus:bg-white focus:border-grey-darker shadow-md">
         </div>
         <div class="w-full mt-8 px-3">
           <label
             :class="{'text-white': theme() === 'dark'}"
             class="block uppercase tracking-wide text-xs font-bold mb-2"
-            for="email">
+            for="password">
             Password
           </label>
           <input
             class="appearance-none block w-full text-grey-darker border border-grey rounded p-4 px-4 leading-tight focus:outline-none focus:shadow-lg focus:bg-white focus:border-grey-darker shadow-md"
-            id="email"
+            v-model="password"
+            id="password"
             type="password"
             placeholder="Password">
         </div>
@@ -49,10 +51,10 @@
             return {
                 hasErrors: false,
                 errors: {
-                    username: false,
+                    email: false,
                     password: false,
                 },
-                username: "",
+                email: "",
                 password: "",
             }
         },
@@ -71,14 +73,19 @@
                     this.hasErrors = false;
                 }
 
-                console.log('We got here!');
+                this.$auth.loginWith('local', {
+                    data: {
+                        email: this.email,
+                        password: this.password
+                    }
+                })
             },
 
             setErrors() {
-                if (this.username.trim().length === 0) {
-                    this.errors.username = true;
+                if (this.email.trim().length === 0) {
+                    this.errors.email = true;
                 } else {
-                    this.errors.username = false;
+                    this.errors.email = false;
                 }
 
                 if (this.password.trim().length === 0) {
@@ -87,7 +94,7 @@
                     this.errors.password = false;
                 }
 
-                return this.errors.username || this.errors.password;
+                return this.errors.email || this.errors.password;
             }
         },
 

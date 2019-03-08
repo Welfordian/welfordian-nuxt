@@ -88,6 +88,7 @@
 </template>
 
 <script>
+    import { eventBus } from "../eventBus";
     import { mapGetters } from 'vuex';
     import AppButton from "../components/AppButton";
 
@@ -218,6 +219,12 @@
 
                 deep: true
             }
+        },
+
+        beforeRouteEnter(to, from, next) {
+            eventBus.$emit('routeChange', to.fullPath);
+
+            next();
         },
 
         head() {

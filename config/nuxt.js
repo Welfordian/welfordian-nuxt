@@ -48,13 +48,16 @@ module.exports = {
     /*
     ** Plugins to load before mounting the App
     */
-    plugins: [],
+    plugins: [
+        {src: '~plugins/io', ssr: false}
+    ],
 
     /*
     ** Nuxt.js modules
     */
     modules: [
         // Doc: https://axios.nuxtjs.org/usage
+        '@nuxtjs/auth',
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
     ],
@@ -63,6 +66,24 @@ module.exports = {
     */
     axios: {
         // See https://github.com/nuxt-community/axios-module#options
+    },
+
+    auth: {
+        redirect: {
+            login: '/login',
+            logout: '/',
+            home: '/dashboard'
+        },
+
+        strategies: {
+            local: {
+                endpoints: {
+                    login: { url: '/api/v1/auth/login', method: 'post', propertyName: 'token' },
+                    logout: false,
+                    user: { url: '/api/v1/auth/me', method: 'get', propertyName: 'user' }
+                },
+            }
+        }
     },
 
     workbox: {

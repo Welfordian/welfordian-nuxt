@@ -16,7 +16,10 @@
 const Route = use('Route')
 
 Route.group(() => {
-    Route.get('posts', 'PostsController.list');
+    Route.get('me' ,'UserController.me')
+    Route.post('auth/login', 'UserController.attempt')
+    Route.get('auth/me', 'UserController.me').middleware('auth')
+    Route.get('posts', 'PostsController.list')
 }).prefix('api/v1');
 
-Route.any('*', 'NuxtController.render')
+Route.get('*', 'NuxtController.render')
