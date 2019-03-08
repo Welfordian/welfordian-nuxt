@@ -1,7 +1,7 @@
 <template>
   <div
     :class="{'bg-blue-darkest': theme() === 'dark'}"
-    class="container-fluid m-auto min-h-screen h-full pt-24 flex justify-center px-4">
+    class="container-fluid m-auto min-h-screen h-full pb-8 pt-24 flex justify-center px-4">
     <form @submit.prevent="submitForm" class="w-full max-w-md mt-2">
       <h1
         :class="{'text-white': theme() === 'dark', 'text-blue-darker': theme() === 'light'}"
