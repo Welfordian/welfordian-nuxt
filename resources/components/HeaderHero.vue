@@ -13,10 +13,7 @@
         class="text-center lg:text-left">A web developer specializing in Laravel & Vue.</p>
 
       <div class="flex justify-center lg:justify-start">
-        <nuxt-link
-          :class="{'bg-white hover:bg-grey-light text-blue-darkest': theme() === 'dark', 'bg-blue-darker hover:bg-blue-darkest text-white': theme() === 'light'}"
-          to="/contact"
-          class="contact-btn w-50 no-underline sm:w-auto mt-8 shadow-md font-bold py-2 px-4 focus:outline-none focus:shadow-lg rounded hover:shadow-lg">Let's work together</nuxt-link>
+        <app-button tag="nuxt-link" to="/contact" class="mt-12">Let's work together</app-button>
       </div>
     </div>
   </div>
@@ -24,8 +21,10 @@
 
 <script>
     import { mapGetters } from 'vuex'
+    import AppButton from "./AppButton";
     export default {
-      methods: {
+        components: {AppButton},
+        methods: {
           ...mapGetters({
               theme: 'default/theme'
           })

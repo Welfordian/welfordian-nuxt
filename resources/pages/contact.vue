@@ -64,12 +64,7 @@
             v-model="contact.message">Hello</textarea>
         </div>
         <div class="w-full px-3">
-          <button
-            :class="{'hover:bg-blue-darkest text-white bg-blue-darker': theme() === 'light', 'bg-white hover:bg-grey-light text-blue-darkest': theme() === 'dark'}"
-            class="w-full sm:w-auto mt-8 font-bold py-2 px-4 rounded shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg">
-            Get in
-            touch
-          </button>
+          <app-button class="mt-8">Get in touch</app-button>
           <p class="w-full mt-4 ml-0 sm:ml-8 inline-block sm:w-auto text-blue-darker font-bold rounded"
              v-if="formSubmitting">
             Sending...
@@ -93,8 +88,10 @@
 
 <script>
     import { mapGetters } from 'vuex';
+    import AppButton from "../components/AppButton";
 
     export default {
+        components: {AppButton},
         data() {
             return {
                 hasErrors: false,

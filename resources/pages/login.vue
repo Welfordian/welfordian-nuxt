@@ -32,11 +32,7 @@
             placeholder="Password">
         </div>
         <div class="w-ful px-3">
-          <button
-            :class="{'hover:bg-blue-darkest text-white bg-blue-darker': theme() === 'light', 'bg-white hover:bg-grey-light text-blue-darkest': theme() === 'dark'}"
-            class="w-full sm:w-auto mt-8 font-bold py-2 px-4 rounded shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg">
-            Let's go, baby!
-          </button>
+          <app-button class="mt-8">Let's go, baby!</app-button>
         </div>
       </div>
     </form>
@@ -45,8 +41,10 @@
 
 <script>
     import { mapGetters } from 'vuex';
+    import AppButton from "../components/AppButton";
 
     export default {
+        components: {AppButton},
         data() {
             return {
                 hasErrors: false,
