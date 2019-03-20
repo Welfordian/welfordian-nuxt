@@ -63,14 +63,14 @@
         head() {
             return {
                 meta: [
-                    { name: 'twitter:card', content: 'summary' },
-                    { name: 'twitter:site', content: '@welfordian' },
-                    { name: 'twitter:creator', content: '@welfordian' },
-                    { name: 'og:url', content: `https://welford.me/${this.post.slug}` },
-                    { name: 'og:title', content: this.post.title },
-                    { name: 'og:description', content: this.post.intro_text },
-                    { name: 'og:image', content: this.post.intro_image },
-                    { name: 'og:type', content: 'article' }
+                    { name: 'twitter:card', property: 'twitter:card', content: 'summary' },
+                    { name: 'twitter:site', property: 'twitter:site', content: '@welfordian' },
+                    { name: 'twitter:creator', property: 'twitter:creator', content: '@welfordian' },
+                    { name: 'og:url', property: 'og:url', content: `https://welford.me/${this.post.slug}` },
+                    { name: 'og:title', property: 'og:title', content: this.post.title },
+                    { name: 'og:description', property: 'og:description', content: this.post.intro_text },
+                    { name: 'og:image', property: 'og:image', content: this.post.intro_image },
+                    { name: 'og:type', property: 'og:type', content: 'article' }
                 ]
             }
         }
