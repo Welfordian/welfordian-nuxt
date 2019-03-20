@@ -7,8 +7,8 @@
             to="/"
             :class="{'hover:text-blue-darkest text-blue-darker': theme() === 'light', 'hover:text-blue text-blue-dark': theme() === 'dark'}"
             class="nav-link block mt-4 lg:inline-block lg:mt-0 bg-transparent font-bold"><span class="text-base md:text-sm font-bold mr-1">&lt;</span>BACK TO BLOG</nuxt-link>
-          <h1 class="font-sans break-normal pt-6 pb-2 text-3xl md:text-4xl">{{ post.title }}</h1>
-          <p class="text-sm md:text-base font-normal text-grey-dark">Published {{ post.diffForHumans }}</p>
+          <h1 class="font-sans break-normal pt-6 pb-2 text-3xl md:text-4xl">Why fetch the same data twice?</h1>
+          <p class="text-sm md:text-base font-normal text-grey-dark"></p>
         </div>
 
         <div :class="{'bg-blue-darkest text-white': theme() === 'dark'}" v-html="post.content"></div>
@@ -29,8 +29,11 @@
 
     export default {
         components: {LoadingSpinner},
-        async beforeMount() {
-            this.getPosts();
+
+        async fetch({store, params}) {
+            let posts = await store.dispatch('blog/getPosts');
+
+            store.commit('blog/SET_POSTS', posts);
         },
 
         computed: {
@@ -59,11 +62,27 @@
 
         head() {
             return {
-                //title: this.post.title
+                meta: [
+                    { name: 'twitter:card', content: 'summary' },
+                    { name: 'twitter:site', content: '@welfordian' },
+                    { name: 'twitter:creator', content: '@welfordian' },
+                    { name: 'og:url', content: `https://welford.me/${this.post.slug}` },
+                    { name: 'og:title', content: this.post.title },
+                    { name: 'og:description', content: this.post.intro_text },
+                    { name: 'og:image', content: this.post.intro_image }
+                ]
             }
         }
     }
 </script>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@nytimesbits" />
+<meta name="twitter:creator" content="@nickbilton" />
+<meta property="og:url" content="http://bits.blogs.nytimes.com/2011/12/08/a-twitter-for-my-sister/" />
+<meta property="og:title" content="A Twitter for My Sister" />
+<meta property="og:description" content="In the early days, Twitter grew so quickly that it was almost impossible to add new features because engineers spent their time trying to keep the rocket ship from stalling." />
+<meta property="og:image" content="http://graphics8.nytimes.com/images/2011/12/08/technology/bits-newtwitter/bits-newtwitter-tmagArticle.jpg" />
 
 <style type="less">
   pre {

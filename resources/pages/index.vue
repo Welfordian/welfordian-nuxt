@@ -17,6 +17,7 @@
     import HeaderHero from "../components/HeaderHero";
     import BlogPosts from "../components/BlogPosts";
     import AppFooter from "../components/AppFooter";
+
     export default {
         components: {AppFooter, BlogPosts, HeaderHero},
         layout: 'default',

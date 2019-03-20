@@ -34,7 +34,7 @@
         components: {LoadingSpinner},
 
         beforeMount() {
-            this.getPosts();
+            this.getPosts()();
         },
 
         methods: {

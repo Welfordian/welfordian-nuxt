@@ -1,18 +1,20 @@
 import {eventBus} from "../eventBus";
+import client from './../plugins/client';
 
 export const strict = false;
 
 export const state = () => ({
     posts: [],
-    endpoint: '/api/v1/posts',
+    endpoint: '/posts',
 })
 
 export const actions = {
-    async getPosts({ state, commit }) {
-        if (! state.posts.length) {
-            eventBus.$emit('GOT_POSTS');
-            commit('SET_POSTS', await (await fetch(new Request(state.endpoint))).json());
-        }
+    getPosts({ state, commit }) {
+        return new Promise((resolve, reject) => {
+            client.get(state.endpoint).then((r) => {
+                resolve(r.data);
+            });
+        });
     },
 }
 
