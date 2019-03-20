@@ -34,7 +34,10 @@
         components: {LoadingSpinner},
 
         beforeMount() {
-            this.getPosts()();
+            this.$store.dispatch('blog/getPosts').then(r => {
+                console.log(r);
+                this.$store.commit('blog/SET_POSTS', r);
+            });
         },
 
         methods: {
