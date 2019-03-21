@@ -7,7 +7,7 @@
             to="/"
             :class="{'hover:text-blue-darkest text-blue-darker': theme() === 'light', 'hover:text-blue text-blue-dark': theme() === 'dark'}"
             class="nav-link block mt-4 lg:inline-block lg:mt-0 bg-transparent font-bold"><span class="text-base md:text-sm font-bold mr-1">&lt;</span>BACK TO BLOG</nuxt-link>
-          <h1 class="font-sans break-normal pt-6 pb-2 text-3xl md:text-4xl">Why fetch the same data twice?</h1>
+          <h1 class="font-sans break-normal pt-6 pb-2 text-3xl md:text-4xl" v-html="post.title"></h1>
           <p class="text-sm md:text-base font-normal text-grey-dark"></p>
         </div>
 
