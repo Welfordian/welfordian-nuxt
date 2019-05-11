@@ -11,7 +11,7 @@ export const state = () => ({
 export const actions = {
     getPosts({ state, commit }) {
         return new Promise((resolve, reject) => {
-            client.get(state.endpoint).then((r) => {
+            client.get('https://api.welford.dev/wp-json/wp/v2/posts?per_page=12&_embed').then((r) => {
                 resolve(r.data);
             });
         });

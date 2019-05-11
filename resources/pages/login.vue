@@ -10,11 +10,11 @@
             :class="{'text-white': theme() === 'dark'}"
             class="block uppercase tracking-wide text-xs font-bold mb-2"
             for="email">
-            Email
+            Username
           </label>
           <input
             type="text"
-            placeholder="Email"
+            placeholder="Username"
             v-model="email"
             id="email"
             class="appearance-none block w-full text-grey-darker border border-grey rounded p-4 px-4 leading-tight focus:outline-none focus:shadow-lg focus:bg-white focus:border-grey-darker shadow-md">
@@ -75,7 +75,7 @@
 
                 this.$auth.loginWith('local', {
                     data: {
-                        email: this.email,
+                        username: this.email,
                         password: this.password
                     }
                 })

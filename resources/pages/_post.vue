@@ -7,11 +7,11 @@
             to="/"
             :class="{'hover:text-blue-darkest text-blue-darker': theme() === 'light', 'hover:text-blue text-blue-dark': theme() === 'dark'}"
             class="nav-link block mt-4 lg:inline-block lg:mt-0 bg-transparent font-bold"><span class="text-base md:text-sm font-bold mr-1">&lt;</span>BACK TO BLOG</nuxt-link>
-          <h1 class="font-sans break-normal pt-6 pb-2 text-3xl md:text-4xl" v-html="post.title"></h1>
+          <h1 class="font-sans break-normal pt-6 pb-2 text-3xl md:text-4xl" v-html="post.title.rendered"></h1>
           <p class="text-sm md:text-base font-normal text-grey-dark"></p>
         </div>
 
-        <div :class="{'bg-blue-darkest text-white': theme() === 'dark'}" v-html="post.content"></div>
+        <div class="post-content" :class="{'bg-blue-darkest text-white': theme() === 'dark'}" v-html="post.content.rendered"></div>
       </template>
 
       <div class="flex flex-wrap justify-center" v-else>
@@ -51,7 +51,21 @@
             ...mapGetters({
                 theme: 'default/theme',
                 getPost: 'blog/getPost'
-            })
+            }),
+
+            featuredImage(post) {
+                console.log("Get image from this, baby!", post['_embedded']);
+
+                if ('wp:featuredmedia' in post['_embedded']) {
+                    if (post['_embedded']['wp:featuredmedia'].length) {
+                        return post['_embedded']['wp:featuredmedia'][0]['source_url']
+                    }
+                }
+
+                return "";
+
+                return post['_embedded']['wp:featuredmedia'].length ? "yes" : "no" ;
+            }
         },
 
         beforeRouteEnter(to, from, next) {
@@ -67,9 +81,9 @@
                     { name: 'twitter:site', property: 'twitter:site', hid: 'twitter:site', content: '@welfordian' },
                     { name: 'twitter:creator', property: 'twitter:creator', hid: 'twitter:creator', content: '@welfordian' },
                     { name: 'og:url', property: 'og:url', hid: 'og:url', content: `https://welford.me/${this.post.slug}` },
-                    { name: 'og:title', property: 'og:title', hid: 'og:title', content: this.post.title },
-                    { name: 'og:description', property: 'og:description', hid: 'og:description', content: this.post.intro_text },
-                    { name: 'og:image', property: 'og:image', hid: 'og:image', content: this.post.intro_image },
+                    { name: 'og:title', property: 'og:title', hid: 'og:title', content: this.post.title.rendered },
+                    { name: 'og:description', property: 'og:description', hid: 'og:description', content: this.post.excerpt.rendered },
+                    { name: 'og:image', property: 'og:image', hid: 'og:image', content: this.featuredImage(this.post) },
                     { name: 'og:type', property: 'og:type', hid: 'og:type', content: 'article' }
                 ]
             }
@@ -78,6 +92,14 @@
 </script>
 
 <style type="less">
+  .post-content {
+    line-height: 1.5;
+  }
+
+  .post-content p {
+    margin-bottom: 1em;
+  }
+
   pre {
     @apply bg-blue-darker text-sm text-white py-2 my-4 px-2 rounded overflow-auto;
   }

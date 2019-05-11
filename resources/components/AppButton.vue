@@ -14,7 +14,7 @@
               'bg-white': (theme() === 'dark' && type === 'default' && active),
               'hover:bg-grey-light hover:shadow-lg': (theme() === 'dark' && !noHover),
               'inline-block no-underline': tag === 'nuxt-link'}"
-    class="app-button sm:w-auto font-bold py-2 px-4 rounded shadow-md focus:shadow-lg focus:outline-none">
+    class="app-button font-bold py-2 px-4 rounded shadow-md focus:shadow-lg focus:outline-none">
 
     <slot></slot>
 

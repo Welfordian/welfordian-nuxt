@@ -78,9 +78,9 @@ module.exports = {
         strategies: {
             local: {
                 endpoints: {
-                    login: { url: 'https://welford.me/api/v1/auth/login', method: 'post', propertyName: 'token' },
+                    login: { url: 'https://api.welford.dev/wp-json/jwt-auth/v1/token', method: 'post', propertyName: 'token' },
                     logout: false,
-                    user: { url: 'https://welford.me/api/v1/auth/me', method: 'get', propertyName: 'user' }
+                    user: { url: 'https://api.welford.dev/wp-json/wp/v2/users/me', method: 'get', propertyName: 'id' }
                 },
             }
         }
