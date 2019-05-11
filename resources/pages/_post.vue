@@ -82,7 +82,7 @@
                     { name: 'twitter:creator', property: 'twitter:creator', hid: 'twitter:creator', content: '@welfordian' },
                     { name: 'og:url', property: 'og:url', hid: 'og:url', content: `https://welford.me/${this.post.slug}` },
                     { name: 'og:title', property: 'og:title', hid: 'og:title', content: this.post.title.rendered },
-                    { name: 'og:description', property: 'og:description', hid: 'og:description', content: this.post.excerpt.rendered },
+                    { name: 'og:description', property: 'og:description', hid: 'og:description', content: this.post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '') },
                     { name: 'og:image', property: 'og:image', hid: 'og:image', content: this.featuredImage(this.post) },
                     { name: 'og:type', property: 'og:type', hid: 'og:type', content: 'article' }
                 ]
