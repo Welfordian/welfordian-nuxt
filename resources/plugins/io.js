@@ -3,7 +3,7 @@ import {eventBus} from "../eventBus";
 
 let store;
 let ReadAnalytics = false;
-const WriteAnalytics = Ws().connect().subscribe('write-analytics');
+//const WriteAnalytics = Ws().connect().subscribe('write-analytics');
 
 let setLoggedIn = (auth) => {
     let token = auth.$storage._state['_token.local'].replace('Bearer ', '');
@@ -13,10 +13,10 @@ let setLoggedIn = (auth) => {
     setReadSubscriptions();
 
     WriteAnalytics.on('error', (e) => {
-        console.log('Write', e);
+        //console.log('Write', e);
     })
     ReadAnalytics.on('error', (e) => {
-        console.log('Not auth', e);
+        //console.log('Not auth', e);
     })
 };
 
@@ -27,20 +27,18 @@ let setLoggedOut = () => {
 
 let setReadSubscriptions = () => {
     ReadAnalytics.on('analytics', (d) => {
-        console.log(d);
         store.commit('dashboard/SET_CONNECTIONS', d.connections);
     })
 };
 
 let setRoute = (to) => {
-    console.log('Emitting', to);
-    WriteAnalytics.emit('routeChange', to);
+    //WriteAnalytics.emit('routeChange', to);
 };
 
 
-eventBus.$on('loggedIn', setLoggedIn);
-eventBus.$on('loggedOut', setLoggedOut);
-eventBus.$on('routeChange', setRoute);
+// eventBus.$on('loggedIn', setLoggedIn);
+// eventBus.$on('loggedOut', setLoggedOut);
+// eventBus.$on('routeChange', setRoute);
 
 
 export default (ctx) => {
