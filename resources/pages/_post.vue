@@ -24,6 +24,7 @@
 
 <script>
     import { eventBus } from "../eventBus";
+    import VueWithCompiler from "vue/dist/vue.esm";
     import { mapActions, mapGetters } from 'vuex';
     import LoadingSpinner from "../components/LoadingSpinner";
 
@@ -54,8 +55,6 @@
             }),
 
             featuredImage(post) {
-                console.log("Get image from this, baby!", post['_embedded']);
-
                 if ('wp:featuredmedia' in post['_embedded']) {
                     if (post['_embedded']['wp:featuredmedia'].length) {
                         return post['_embedded']['wp:featuredmedia'][0]['source_url']
@@ -63,8 +62,6 @@
                 }
 
                 return "";
-
-                return post['_embedded']['wp:featuredmedia'].length ? "yes" : "no" ;
             }
         },
 

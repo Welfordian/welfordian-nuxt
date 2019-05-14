@@ -18,6 +18,8 @@
         <app-button class="mt-8 w-full continue-reading">Continue Reading</app-button>
       </div>
     </nuxt-link>
+
+    <app-button v-if="morePosts()" @click.native="toggleLoading" :disabled="loadingMore()" :class="{'opacity-50 cursor-not-allowed': loadingMore()}" class="relative no-underline max-w-sm rounded overflow-hidden shadow-md focus:shadow-lg focus:outline-none m-4 sm:w-full md:w-1/3 lg:w-1/4 xl:w-1/4 cursor-pointer">{{ loadButtonText }}</app-button>
   </div>
 
   <div class="flex justify-center" v-else>
@@ -36,24 +38,28 @@
 
         beforeMount() {
             this.$store.dispatch('blog/getPosts').then(r => {
-                console.log(r);
                 this.$store.commit('blog/SET_POSTS', r);
             });
         },
 
         methods: {
             ...mapActions({
-                getPosts: 'blog/getPosts'
+                getPosts: 'blog/getPosts',
+                setFetching: 'blog/setFetching'
             }),
 
             ...mapGetters({
                 theme: 'default/theme',
-                posts: 'blog/all'
+                posts: 'blog/all',
+                morePosts: 'blog/morePosts',
+                loadingMore: 'blog/loadingMore'
             }),
 
-            featuredImage(post) {
-                console.log("Get image from this, baby!", post['_embedded']);
+            toggleLoading() {
+                this.$store.dispatch('blog/loadMore');
+            },
 
+            featuredImage(post) {
                 if ('wp:featuredmedia' in post['_embedded']) {
                     if (post['_embedded']['wp:featuredmedia'].length) {
                       return post['_embedded']['wp:featuredmedia'][0]['source_url']
@@ -65,6 +71,16 @@
                 return post['_embedded']['wp:featuredmedia'].length ? "yes" : "no" ;
             }
         },
+
+        computed: {
+            loadButtonText() {
+                if (this.loadingMore()) {
+                    return 'More posts incoming!';
+                }
+
+                return 'Load more posts'
+            }
+        }
     }
 </script>
 
