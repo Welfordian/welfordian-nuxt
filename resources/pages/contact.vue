@@ -56,13 +56,13 @@
           <label
             :class="{'text-red': errors.more_details, 'text-grey-darker': (!errors.more_details && theme() === 'light'), 'text-white': (!errors.more_details && theme() === 'dark')}"
             class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="more-details">
-            Anything else to add?</label>
+            Some details, please</label>
           <textarea
             :class="{'border-red': errors.more_details, 'border-grey': (!errors.more_details && theme() === 'light'), 'border-white': (!errors.more_details && theme() === 'dark')}"
             class="appearance-none block w-full h-32 text-grey-darker border rounded p-4 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey-darker focus:shadow-lg shadow-md resize-none"
             id="more-details"
-            placeholder="Some very important information"
-            v-model="contact.message">Hello</textarea>
+            :placeholder="detailsPlaceholder"
+            v-model="contact.message"></textarea>
         </div>
         <div class="w-full px-3">
           <app-button class="mt-8">Get in touch</app-button>
@@ -204,6 +204,16 @@
                     {type: "freelancing", state: false, text: "Freelancing"},
                     {type: "full_time", state: false, text: "Full-Time"}
                 ];
+            },
+        },
+
+        computed: {
+            detailsPlaceholder() {
+                if (this.contact.name === '') {
+                    return 'You are amazing! Thanks, Jane Doe.'
+                }
+
+                return 'You are amazing! Thanks, ' + this.contact.name + '.';
             }
         },
 

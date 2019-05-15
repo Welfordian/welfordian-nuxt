@@ -11,11 +11,15 @@ export const state = () => ({
 })
 
 export const actions = {
-    getPosts({ state, commit, rootState }) {
-        let endpoint = 'https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed';
+    getPosts({ state, commit, rootState }, slug = false) {
+        let endpoint = 'https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed&_tags';
 
         if (rootState.auth.loggedIn) {
-            endpoint = 'https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed&status=any';
+            endpoint = 'https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed&_tags&status=any';
+        }
+
+        if (slug) {
+            endpoint += "&filter[tag]=" + slug;
         }
 
         return new Promise((resolve, reject) => {

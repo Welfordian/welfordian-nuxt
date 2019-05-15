@@ -2,7 +2,7 @@
   <div
     :class="{'bg-blue-darkest': currentTheme() === 'dark'}"
     class="container-fluid m-auto pb-8 pt-12 sm:mt-18 min-h-screen h-full">
-    <header-hero></header-hero>
+    <header-hero class="mb-5"></header-hero>
 
     <blog-posts></blog-posts>
 

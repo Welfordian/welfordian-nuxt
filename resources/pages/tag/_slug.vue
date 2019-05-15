@@ -1,18 +1,11 @@
 <template>
-  <div class="flex flex-row flex-wrap content-center justify-center" v-if="posts().length">
-    <div :class="{'bg-blue-darker': theme() === 'dark'}"
-               class="relative blog-post-card no-underline max-w-sm rounded overflow-hidden shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg m-4 sm:w-full md:w-1/3 lg:w-1/4 xl:w-1/4"
-               tabindex="0"
-               v-for="post in posts()"
-               :key="post.id">
+  <div class="container-fluid m-auto pb-8 pt-12 sm:mt-18 min-h-screen h-full flex flex-wrap justify-center" v-if="posts().length" :class="{'bg-blue-darkest': theme() === 'dark'}">
+    <header-hero class="flex w-full mb-5"></header-hero>
+
+    <div :class="{'bg-blue-darker': theme() === 'dark'}" class="relative blog-post-card no-underline max-w-sm rounded overflow-hidden shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg m-4 sm:w-full md:w-1/3 lg:w-1/4 xl:w-1/4" tabindex="0" v-for="post in posts()" :key="post.id">
       <div class="flex-grow flex flex-auto h-full flex-col">
         <div class="relative">
-          <img class="w-full h-64" v-bind:src="featuredImage(post)" alt="Post Intro Image">
-
-          <div class="flex post-author-details rounded-l px-4 py-2 items-center bg-white" :class="{'bg-blue-darker text-white': theme() === 'dark'}">
-            <img :src="post._embedded.author[0].avatar_urls['96']" width="24" class="mr-2" />
-            <p>{{ post._embedded.author[0].name }}</p>
-          </div>
+          <img class="w-full h-64" v-bind:src="featuredImage(post)" alt="Sunset in the mountains">
         </div>
         <p v-if="post.status === 'draft'" class="draft-label">Draft</p>
         <div class="px-6 py-4 flex flex-col flex-grow">
@@ -43,15 +36,16 @@
 
 <script>
     import { mapActions, mapGetters } from 'vuex';
-    import LoadingSpinner from "./LoadingSpinner";
-    import AppButton from "./AppButton";
+    import LoadingSpinner from "../../components/LoadingSpinner";
+    import AppButton from "../../components/AppButton";
+    import HeaderHero from "../../components/HeaderHero";
 
     export default {
-        name: 'blog-posts',
-        components: {AppButton, LoadingSpinner},
+        name: 'blog-posts-filtered',
+        components: {HeaderHero, AppButton, LoadingSpinner},
 
         beforeMount() {
-            this.$store.dispatch('blog/getPosts').then(r => {
+            this.$store.dispatch('blog/getPosts', this.$route.params.slug).then(r => {
                 this.$store.commit('blog/SET_POSTS', r);
             });
         },
@@ -76,7 +70,7 @@
             featuredImage(post) {
                 if ('wp:featuredmedia' in post['_embedded']) {
                     if (post['_embedded']['wp:featuredmedia'].length) {
-                      return post['_embedded']['wp:featuredmedia'][0]['source_url']
+                        return post['_embedded']['wp:featuredmedia'][0]['source_url']
                     }
                 }
 
@@ -125,11 +119,5 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .12), 0 2px 4px 0 rgba(0, 0, 0, .08);
     text-transform: uppercase;
     font-weight: bold;
-  }
-
-  .post-author-details {
-    position: absolute;
-    bottom: 10px;
-    right: 0px;
   }
 </style>

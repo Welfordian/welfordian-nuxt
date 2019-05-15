@@ -56,22 +56,6 @@
   export default {
       name: 'nav-bar',
 
-      mounted() {
-          document.onkeydown = (e) => {
-              if ((e.metaKey || e.ctrlKey) && (e.key === "1" || e.key === "2" || e.key === "3")) {
-                  let map = {
-                      "1": "/",
-                      "2": "contact",
-                      "3": "login"
-                  };
-
-                  e.preventDefault();
-
-                  this.$router.push({path: map[e.key]});
-              }
-          }
-      },
-
       data() {
           return {
               navOpen: false
