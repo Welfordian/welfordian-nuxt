@@ -1,5 +1,4 @@
-import {eventBus} from "../eventBus";
-import client from './../plugins/client';
+import { client } from './../plugins/client';
 
 export const strict = false;
 
@@ -12,9 +11,15 @@ export const state = () => ({
 })
 
 export const actions = {
-    getPosts({ state, commit }) {
+    getPosts({ state, commit, rootState }) {
+        let endpoint = 'https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed';
+
+        if (rootState.auth.loggedIn) {
+            endpoint = 'https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed&status=any';
+        }
+
         return new Promise((resolve, reject) => {
-            client.get('https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed').then((r) => {
+            client.get(endpoint).then((r) => {
                 commit('SET_MORE_POSTS', r.headers['x-wp-totalpages'] > state.currentPage);
 
                 resolve(r.data);
@@ -26,7 +31,7 @@ export const actions = {
         commit('SET_LOADING', true);
         commit('INCREMENT_PAGE');
 
-        client.get('https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed&page=' + state.currentPage).then((r) => {
+        client.get('https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed&status=any&page=' + state.currentPage).then((r) => {
             commit('SET_MORE_POSTS', r.headers['x-wp-totalpages'] > state.currentPage);
 
             commit('APPEND_POSTS', r.data);

@@ -49,7 +49,7 @@ module.exports = {
     ** Plugins to load before mounting the App
     */
     plugins: [
-        {src: '~plugins/io', ssr: false}
+        {src: '~plugins/io', ssr: false},
     ],
 
     /*
@@ -83,7 +83,11 @@ module.exports = {
                     user: { url: 'https://api.welford.dev/wp-json/wp/v2/users/me', method: 'get', propertyName: 'id' }
                 },
             }
-        }
+        },
+
+        plugins: [
+            {src: '~plugins/client', srr: false}
+        ]
     },
 
     workbox: {
