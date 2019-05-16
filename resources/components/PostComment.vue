@@ -5,7 +5,7 @@
 
       <div class="flex-grow">
         <div class="flex flex-grow text-sm">
-          {{ name }} <span class="text-2xl mx-2 name-separator">·</span> 2 Days Ago
+          {{ name }} <!--<span class="text-2xl mx-2 name-separator">·</span> 2 Days Ago-->
         </div>
 
         <div class="flex-grow mt-2 text-sm" v-html="content"></div>
