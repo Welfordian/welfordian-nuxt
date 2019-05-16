@@ -8,6 +8,7 @@ export const state = () => ({
     morePosts: false,
     loadingMore: false,
     endpoint: '/posts',
+    comments: []
 })
 
 export const actions = {
@@ -22,11 +23,33 @@ export const actions = {
             endpoint += "&filter[tag]=" + slug;
         }
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             client.get(endpoint).then((r) => {
                 commit('SET_MORE_POSTS', r.headers['x-wp-totalpages'] > state.currentPage);
 
                 resolve(r.data);
+            });
+        });
+    },
+
+    getComments({ state, commit, rootState }, id = false) {
+        let endpoint = `https://api.welford.dev/wp-json/wp/v2/comments?post=${id}&_embedded`;
+
+        return new Promise((resolve) => {
+            client.get(endpoint).then((r) => {
+                resolve(r.data);
+            });
+        });
+    },
+
+    submitComment({ state, commit, rootState}, data) {
+        let endpoint = `https://api.welford.dev/wp-json/wp/v2/comments`;
+
+        return new Promise((resolve) => {
+            client.post(endpoint, data).then((r) => {
+                commit('ADD_COMMENT', r.data);
+
+                resolve();
             });
         });
     },
@@ -63,6 +86,14 @@ export const mutations = {
 
     SET_LOADING(state, loadingMore) {
         state.loadingMore = loadingMore;
+    },
+
+    SET_COMMENTS(state, comments) {
+        state.comments = comments;
+    },
+
+    ADD_COMMENT(state, comment) {
+        state.comments.unshift(comment);
     }
 }
 
@@ -85,6 +116,10 @@ export const getters = {
                 return post.slug == slug;
             })[0];
         }
+    },
+
+    comments(state) {
+        return state.comments;
     }
 }
 

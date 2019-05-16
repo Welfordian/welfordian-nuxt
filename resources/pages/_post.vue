@@ -1,6 +1,6 @@
 <template>
   <div :class="{'bg-blue-darkest text-white': theme() === 'dark'}">
-    <div class="container-fluid m-auto pb-24 pt-24 min-h-screen h-full px-4 w-3/4 m-auto">
+    <div class="container-fluid m-auto pb-24 pt-16 sm:pt-24 min-h-screen h-full px-4 w-full  sm:w-3/4 m-auto">
       <template v-if="post">
         <div class="font-sans">
           <nuxt-link
@@ -8,7 +8,7 @@
             :class="{'hover:text-blue-darkest text-blue-darker': theme() === 'light', 'hover:text-blue text-blue-dark': theme() === 'dark'}"
             class="nav-link block mt-4 lg:inline-block lg:mt-0 bg-transparent font-bold"><span class="text-base md:text-sm font-bold mr-1">&lt;</span>BACK TO BLOG</nuxt-link>
           <div class="flex justify-start items-center">
-            <p v-if="post.status === 'draft'" class="draft-label">Draft</p>
+            <p v-if="post.status === 'draft'" class="draft-label" :class="{'bg-blue-darkest text-white': theme() === 'light', 'bg-white text-blue-darkest': theme() === 'dark'}">Draft</p>
             <h1 class="font-sans break-normal pt-6 pb-2 text-3xl md:text-4xl" v-html="post.title.rendered"></h1>
           </div>
           <p class="text-sm md:text-base font-normal text-grey-dark"></p>
@@ -17,6 +17,8 @@
         <div class="post-content" :class="{'bg-blue-darkest text-white': theme() === 'dark'}" v-html="post.content.rendered"></div>
 
         <app-button v-if="post.status === 'draft'" tag="a" target="_blank" class="w-full block text-center no-underline mt-5" :href="'https://api.welford.dev/wp-admin/post.php?post=' + post.id + '&action=edit'">Continue Editing</app-button>
+
+        <post-comments class="mt-16" :post="post.id"></post-comments>
       </template>
 
       <div class="flex flex-wrap justify-center" v-else>
@@ -33,9 +35,10 @@
     import { mapActions, mapGetters } from 'vuex';
     import LoadingSpinner from "../components/LoadingSpinner";
     import AppButton from "../components/AppButton";
+    import PostComments from "../components/PostComments";
 
     export default {
-        components: {LoadingSpinner, AppButton},
+        components: {PostComments, LoadingSpinner, AppButton},
 
         async fetch({store, params}) {
             let posts = await store.dispatch('blog/getPosts');
@@ -133,8 +136,6 @@
   }
 
   .draft-label {
-    background: white;
-    color: black;
     padding: 6px 10px;
     border-radius: .25rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .12), 0 2px 4px 0 rgba(0, 0, 0, .08);
