@@ -1,18 +1,31 @@
 <template>
-  <div :class="{'bg-blue-darkest text-white': theme() === 'dark'}">
-    <div class="container-fluid m-auto pb-24 pt-16 sm:pt-24 min-h-screen h-full px-4 w-full  sm:w-3/4 m-auto">
-      <template v-if="post">
+  <div class="flex justify-around" :class="{'bg-blue-darkest text-white': theme() === 'dark', 'text-blue-darker': theme() === 'light'}">
+    <div class="container-fluid pb-24 pt-16 min-h-screen h-full px-4 w-full lg:w-3/5">
+      <template>
         <div class="font-sans">
-          <nuxt-link
-            to="/"
-            :class="{'hover:text-blue-darkest text-blue-darker': theme() === 'light', 'hover:text-blue text-blue-dark': theme() === 'dark'}"
-            class="nav-link block mt-4 lg:inline-block lg:mt-0 bg-transparent font-bold"><span class="text-base md:text-sm font-bold mr-1">&lt;</span>BACK TO BLOG</nuxt-link>
           <div class="flex justify-start items-center">
             <p v-if="post.status === 'draft'" class="draft-label" :class="{'bg-blue-darkest text-white': theme() === 'light', 'bg-white text-blue-darkest': theme() === 'dark'}">Draft</p>
-            <h1 class="font-sans break-normal pt-6 pb-2 text-3xl md:text-4xl" v-html="post.title.rendered"></h1>
+            <h1 class="font-sans break-normal pt-6 pb-2 text-2xl md:text-4xl" v-html="post.title.rendered"></h1>
           </div>
-          <p class="text-sm md:text-base font-normal text-grey-dark"></p>
         </div>
+        <div class="flex justify-between mt-4 items-center">
+          <div class="flex text-xs">
+            <font-awesome-icon class="mr-2" :icon="['far', 'clock']" />
+
+            <p>{{ this.timeAgo(post.date) }}</p>
+          </div>
+
+          <div>
+            <span class="px-3 py-2 share-facebook cursor-pointer" @click="shareToFacebook()">
+              <font-awesome-icon :icon="['fab', 'facebook-f']" />
+            </span>
+
+            <span class="px-3 py-2 share-twitter cursor-pointer" @click="shareToTwitter()">
+              <font-awesome-icon :icon="['fab', 'twitter']" />
+            </span>
+          </div>
+        </div>
+        <hr class="bg-blue-darker my-4" />
 
         <div class="post-content" :class="{'bg-blue-darkest text-white': theme() === 'dark'}" v-html="post.content.rendered"></div>
 
@@ -20,30 +33,40 @@
 
         <post-comments class="mt-16" :post="post.id"></post-comments>
       </template>
+    </div>
 
-      <div class="flex flex-wrap justify-center" v-else>
-        <h1 class="w-full text-center uppercase mb-4">Loading post...</h1>
-        <loading-spinner></loading-spinner>
-      </div>
+    <div class="hidden lg:block w-1/5 pt-24 px-4 bg-blue-darker" :class="{'bg-blue-darkest text-white': theme() === 'dark'}">
+      <h2>Recent Posts</h2>
+
+      <blog-posts :recent="true"></blog-posts>
     </div>
   </div>
 </template>
 
 <script>
     import { eventBus } from "../eventBus";
-    import VueWithCompiler from "vue/dist/vue.esm";
     import { mapActions, mapGetters } from 'vuex';
     import LoadingSpinner from "../components/LoadingSpinner";
     import AppButton from "../components/AppButton";
     import PostComments from "../components/PostComments";
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+    import BlogPosts from "../components/BlogPosts";
 
     export default {
-        components: {PostComments, LoadingSpinner, AppButton},
+        middleware: 'amp',
+        amp: true,
+        components: {BlogPosts, PostComments, LoadingSpinner, AppButton, FontAwesomeIcon},
 
-        async fetch({store, params}) {
+        async fetch({store, error}) {
             let posts = await store.dispatch('blog/getPosts');
 
             store.commit('blog/SET_POSTS', posts);
+        },
+
+        data() {
+            return {
+                times: [["second", 1], ["minute", 60], ["hour", 3600], ["day", 86400], ["week", 604800], ["month", 2592000], ["year", 31536000]]
+            }
         },
 
         computed: {
@@ -62,6 +85,38 @@
                 theme: 'default/theme',
                 getPost: 'blog/getPost'
             }),
+
+            htmlToText(html) {
+                let div = document.createElement('div');
+
+                div.innerHTML = html;
+
+                return div.innerText;
+            },
+
+            shareToFacebook() {
+                window.open("https://www.facebook.com/sharer/sharer.php?u=https://welford.me/" + this.post.slug, "pop", "width=600, height=400, scrollbars=no");
+            },
+
+            shareToTwitter() {
+                window.open("https://twitter.com/intent/tweet?url=https://welford.me/" + this.post.slug + "&via=welfordian&text=" + this.htmlToText(this.post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '').substring(0, (139 - (("https://welford.me/" + this.post.slug) + " via @welfordian").length))), "pop", "width=600, height=270, scrollbars=no");
+            },
+
+            timeAgo(date) {
+                let NOW = new Date()
+                let diff = Math.round((NOW - (new Date(date))) / 1000)
+
+                for (let t = 0; t < this.times.length; t++) {
+                    if (diff < this.times[t][1]) {
+                        if (t === 0) {
+                            return "Just now"
+                        } else {
+                            diff = Math.round(diff / this.times[t - 1][1])
+                            return diff + " " + this.times[t - 1][0] + (diff === 1?" ago":"s ago")
+                        }
+                    }
+                }
+            },
 
             featuredImage(post) {
                 if ('wp:featuredmedia' in post['_embedded']) {
@@ -87,7 +142,7 @@
                     { name: 'twitter:site', property: 'twitter:site', hid: 'twitter:site', content: '@welfordian' },
                     { name: 'twitter:creator', property: 'twitter:creator', hid: 'twitter:creator', content: '@welfordian' },
                     { name: 'og:url', property: 'og:url', hid: 'og:url', content: `https://welford.me/${this.post.slug}` },
-                    { name: 'og:title', property: 'og:title', hid: 'og:title', content: this.post.title.rendered },
+                    { name: 'og:title', property: 'og:title', hid: 'og:title', content: this.htmlToText(this.post.title.rendered) },
                     { name: 'og:description', property: 'og:description', hid: 'og:description', content: this.post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '') },
                     { name: 'og:image', property: 'og:image', hid: 'og:image', content: this.featuredImage(this.post) },
                     { name: 'og:type', property: 'og:type', hid: 'og:type', content: 'article' }
@@ -131,8 +186,9 @@
 
   .rt-reading-time {
     display: block;
-    margin-bottom: 2.3rem;
+    margin-bottom: 1rem;
     font-weight: bold;
+    font-size: .85rem;
   }
 
   .draft-label {
@@ -143,5 +199,41 @@
     margin-top: 1rem;
     margin-right: 1rem;
     font-weight: bold;
+  }
+
+  .share-facebook {
+    color: #3b5998;
+  }
+
+  .share-facebook:hover {
+    background-color: #3b5998;
+    color: white;
+  }
+
+  .share-messenger {
+    color: #0084ff;
+  }
+
+  .share-messenger:hover {
+    background-color: #0084ff;
+    color: white;
+  }
+
+  .share-twitter {
+    color: #1da1f2;
+  }
+
+  .share-twitter:hover {
+    background-color: #1da1f2;
+    color: white;
+  }
+
+  hr {
+    height: 0.05rem;
+  }
+
+  .post-content img:nth-of-type(1) {
+    margin-bottom: 1.2rem;
+    width: 100%;
   }
 </style>

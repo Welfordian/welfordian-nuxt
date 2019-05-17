@@ -20,6 +20,7 @@ Route.group(() => {
     Route.post('auth/login', 'UserController.attempt')
     Route.get('auth/me', 'UserController.me').middleware('auth')
     Route.get('posts', 'PostsController.list')
+    //Route.post('analytics', 'AnalyticsController.catch')
 }).prefix('api/v1');
 
 Route.get('*', 'NuxtController.render')

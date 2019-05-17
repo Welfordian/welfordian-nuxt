@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-row flex-wrap content-center justify-center" v-if="posts().length">
-    <div :class="{'bg-blue-darker': theme() === 'dark'}"
-               class="relative blog-post-card no-underline max-w-sm rounded overflow-hidden shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg m-4 sm:w-full md:w-1/3 lg:w-1/4 xl:w-1/4"
-               tabindex="0"
-               v-for="post in posts()"
-               :key="post.id">
+    <div v-if="!recent" :class="{'bg-blue-darker': theme() === 'dark'}"
+         class="relative blog-post-card no-underline max-w-sm rounded overflow-hidden shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg m-4 sm:w-full md:w-1/3 lg:w-1/4 xl:w-1/4"
+         tabindex="0"
+         v-for="post in posts()"
+         :key="post.id">
       <div class="flex-grow flex flex-auto h-full flex-col">
         <div class="relative">
           <img class="w-full h-64" v-bind:src="featuredImage(post)" alt="Post Intro Image">
@@ -33,7 +33,26 @@
       </div>
     </div>
 
-    <app-button v-if="morePosts()" @click.native="toggleLoading" :disabled="loadingMore()" :class="{'opacity-50 cursor-not-allowed': loadingMore()}" class="relative no-underline max-w-sm rounded overflow-hidden shadow-md focus:shadow-lg focus:outline-none m-4 sm:w-full md:w-1/3 lg:w-1/4 xl:w-1/4 cursor-pointer">{{ loadButtonText }}</app-button>
+    <div class="w-full mt-4" v-else>
+      <div>
+        <nuxt-link :to="{ name: 'post', params: { post: post.slug }}" class="no-underline hover:text-blue" :class="{'text-blue-darker': theme() === 'light', 'text-white': theme() === 'dark'}">
+          <div class="relative">
+            <img class="w-full" v-bind:src="featuredImage(post)" alt="Post Intro Image">
+
+            <div class="flex post-author-details rounded-l px-4 py-2 items-center bg-white" :class="{'bg-blue-darker text-white': theme() === 'dark'}">
+              <img :src="post._embedded.author[0].avatar_urls['96']" width="24" class="mr-2" />
+              <p>{{ post._embedded.author[0].name }}</p>
+            </div>
+
+            <p v-if="post.status === 'draft'" class="draft-label">Draft</p>
+          </div>
+
+          <p class="font-bold" v-html="post.title.rendered"></p>
+        </nuxt-link>
+      </div>
+    </div>
+
+    <app-button v-if="morePosts()" @click.native="toggleLoading" :disabled="loadingMore()" :class="{'opacity-50 cursor-not-allowed': loadingMore(), 'w-full my-4': recent, 'w-full sm:w-full md:w-2/3 lg:w-3/3 xl:w-4/4 m-4': !recent}" class="relative no-underline rounded overflow-hidden shadow-md focus:shadow-lg focus:outline-none cursor-pointer">{{ loadButtonText }}</app-button>
   </div>
 
   <div class="flex justify-center" v-else>
@@ -49,6 +68,11 @@
     export default {
         name: 'blog-posts',
         components: {AppButton, LoadingSpinner},
+        props: {
+            recent: {
+                default: false
+            }
+        },
 
         beforeMount() {
             this.$store.dispatch('blog/getPosts').then(r => {

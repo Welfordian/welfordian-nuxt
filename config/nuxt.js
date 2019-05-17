@@ -42,7 +42,8 @@ module.exports = {
     ** Global CSS
     */
     css: [
-        '~/assets/css/tailwind.css'
+        '~/assets/css/tailwind.css',
+        '@fortawesome/fontawesome-svg-core/styles.css'
     ],
 
     /*
@@ -50,6 +51,7 @@ module.exports = {
     */
     plugins: [
         {src: '~plugins/io', ssr: false},
+        {src: '~/plugins/font-awesome'},
     ],
 
     /*
@@ -60,6 +62,7 @@ module.exports = {
         '@nuxtjs/auth',
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
+        '@nuxtjs/amp'
     ],
     /*
     ** Axios module configuration
