@@ -1,44 +1,46 @@
 <template>
-  <div class="flex justify-around" :class="{'bg-blue-darkest text-white': theme() === 'dark', 'text-blue-darker': theme() === 'light'}">
-    <div class="container-fluid pb-24 pt-16 min-h-screen h-full px-4 w-full lg:w-3/5">
-      <template>
-        <div class="font-sans">
-          <div class="flex justify-start items-center">
-            <p v-if="post.status === 'draft'" class="draft-label" :class="{'bg-blue-darkest text-white': theme() === 'light', 'bg-white text-blue-darkest': theme() === 'dark'}">Draft</p>
-            <h1 class="font-sans break-normal pt-6 pb-2 text-2xl md:text-4xl" v-html="post.title.rendered"></h1>
+  <div class="flex w-full justify-center" :class="{'bg-blue-darkest text-white': theme() === 'dark', 'text-blue-darker': theme() === 'light'}">
+    <div class="w-full sm:w-4/5 flex justify-around">
+      <div class="container-fluid pb-24 pt-16 min-h-screen h-full px-4 w-full lg:w-3/5">
+        <template>
+          <div class="font-sans">
+            <div class="flex justify-start items-center">
+              <p v-if="post.status === 'draft'" class="draft-label" :class="{'bg-blue-darkest text-white': theme() === 'light', 'bg-white text-blue-darkest': theme() === 'dark'}">Draft</p>
+              <h1 class="font-sans break-normal pt-6 pb-2 text-2xl md:text-4xl" v-html="post.title.rendered"></h1>
+            </div>
           </div>
-        </div>
-        <div class="flex justify-between mt-4 items-center">
-          <div class="flex text-xs">
-            <font-awesome-icon class="mr-2" :icon="['far', 'clock']" />
+          <div class="flex justify-between mt-4 items-center">
+            <div class="flex text-xs">
+              <font-awesome-icon class="mr-2" :icon="['far', 'clock']" />
 
-            <p>{{ this.timeAgo(post.date) }}</p>
-          </div>
+              <p>{{ this.timeAgo(post.date) }}</p>
+            </div>
 
-          <div>
+            <div>
             <span class="px-3 py-2 share-facebook cursor-pointer" @click="shareToFacebook()">
               <font-awesome-icon :icon="['fab', 'facebook-f']" />
             </span>
 
-            <span class="px-3 py-2 share-twitter cursor-pointer" @click="shareToTwitter()">
+              <span class="px-3 py-2 share-twitter cursor-pointer" @click="shareToTwitter()">
               <font-awesome-icon :icon="['fab', 'twitter']" />
             </span>
+            </div>
           </div>
-        </div>
-        <hr class="bg-blue-darker my-4" />
+          <hr class="bg-blue-darker my-4" />
 
-        <div class="post-content" :class="{'bg-blue-darkest text-white': theme() === 'dark'}" v-html="post.content.rendered"></div>
+          <div class="post-content" :class="{'bg-blue-darkest text-white': theme() === 'dark'}" v-html="post.content.rendered"></div>
 
-        <app-button v-if="post.status === 'draft'" tag="a" target="_blank" class="w-full block text-center no-underline mt-5" :href="'https://api.welford.dev/wp-admin/post.php?post=' + post.id + '&action=edit'">Continue Editing</app-button>
+          <app-button v-if="post.status === 'draft'" tag="a" target="_blank" class="w-full block text-center no-underline mt-5" :href="'https://api.welford.dev/wp-admin/post.php?post=' + post.id + '&action=edit'">Continue Editing</app-button>
 
-        <post-comments class="mt-16" :post="post.id"></post-comments>
-      </template>
-    </div>
+          <post-comments class="mt-16" :post="post.id"></post-comments>
+        </template>
+      </div>
 
-    <div class="hidden lg:block w-1/5 pt-24 px-4 bg-blue-darker" :class="{'bg-blue-darkest text-white': theme() === 'dark'}">
-      <h2>Recent Posts</h2>
+      <div class="hidden lg:block w-1/5 pt-24 px-4 text-white" :class="{'text-blue-darker': theme() === 'light'}">
+        <h2>Recent Posts</h2>
 
-      <blog-posts :recent="true"></blog-posts>
+        <blog-posts :recent="true"></blog-posts>
+      </div>
     </div>
   </div>
 </template>
@@ -86,13 +88,20 @@
                 getPost: 'blog/getPost'
             }),
 
-            htmlToText(html) {
-                if (process.browser) {
-                    let div = document.createElement('div');
+            htmlToText(encodedStr) {
+                if (!process.browser) {
+                    const Entities = require('html-entities').AllHtmlEntities;
 
-                    div.innerHTML = html;
+                    const entities = new Entities();
 
-                    return div.innerText;
+                    return entities.decode(encodedStr);
+                } else {
+                    var parser = new DOMParser;
+                    var dom = parser.parseFromString(
+                        '<!doctype html><body>' + encodedStr,
+                        'text/html');
+
+                    return dom.body.textContent;
                 }
             },
 
@@ -144,7 +153,6 @@
                     { name: 'twitter:site', property: 'twitter:site', hid: 'twitter:site', content: '@welfordian' },
                     { name: 'twitter:creator', property: 'twitter:creator', hid: 'twitter:creator', content: '@welfordian' },
                     { name: 'og:url', property: 'og:url', hid: 'og:url', content: `https://welford.me/${this.post.slug}` },
-                    { name: 'og:title', property: 'og:title', hid: 'og:title', content: this.htmlToText(this.post.title.rendered) },
                     { name: 'og:title', property: 'og:title', hid: 'og:title', content: this.htmlToText(this.post.title.rendered) },
                     { name: 'og:description', property: 'og:description', hid: 'og:description', content: this.post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '') },
                     { name: 'og:image', property: 'og:image', hid: 'og:image', content: this.featuredImage(this.post) },

@@ -35,11 +35,11 @@
 
     <div class="w-full mt-4" v-else>
       <div>
-        <nuxt-link :to="{ name: 'post', params: { post: post.slug }}" class="no-underline hover:text-blue" :class="{'text-blue-darker': theme() === 'light', 'text-white': theme() === 'dark'}">
+        <nuxt-link :to="{ name: 'post', params: { post: post.slug }}" class="no-underline hover:text-blue text-white" :class="{'text-blue-darker': theme() === 'light'}">
           <div class="relative">
             <img class="w-full" v-bind:src="featuredImage(post)" alt="Post Intro Image">
 
-            <div class="flex post-author-details rounded-l px-4 py-2 items-center bg-white" :class="{'bg-blue-darker text-white': theme() === 'dark'}">
+            <div class="flex post-author-details rounded-l px-4 py-2 items-center bg-white" :class="{'bg-blue-darker': theme() === 'dark'}">
               <img :src="post._embedded.author[0].avatar_urls['96']" width="24" class="mr-2" />
               <p>{{ post._embedded.author[0].name }}</p>
             </div>

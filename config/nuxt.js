@@ -96,7 +96,8 @@ module.exports = {
     workbox: {
         runtimeCaching: [
             {
-                urlPattern: 'https://api.welford.me/.*',
+                urlPattern: 'https://api.welford.dev/.*',
+                handler: 'staleWhileRevalidate'
             },
             {
                 urlPattern: 'https://cdn.welford.me/.*',

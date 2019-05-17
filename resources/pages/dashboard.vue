@@ -43,7 +43,6 @@
 
                       page = page.replace('/', '');
 
-                      console.log(page);
                       if (mappedPages.hasOwnProperty(page)) {
                           mappedPages[page].count++;
                       } else {

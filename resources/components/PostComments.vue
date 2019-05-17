@@ -86,10 +86,6 @@
                   }
 
                   parentComment.children = childComments.filter((comment) => {
-                      if (comment.parent === parentComment.id) {
-                          console.log(comment);
-                      }
-
                       return comment.parent === parentComment.id;
                   })
               });
