@@ -87,11 +87,13 @@
             }),
 
             htmlToText(html) {
-                let div = document.createElement('div');
+                if (process.browser) {
+                    let div = document.createElement('div');
 
-                div.innerHTML = html;
+                    div.innerHTML = html;
 
-                return div.innerText;
+                    return div.innerText;
+                }
             },
 
             shareToFacebook() {
@@ -142,6 +144,7 @@
                     { name: 'twitter:site', property: 'twitter:site', hid: 'twitter:site', content: '@welfordian' },
                     { name: 'twitter:creator', property: 'twitter:creator', hid: 'twitter:creator', content: '@welfordian' },
                     { name: 'og:url', property: 'og:url', hid: 'og:url', content: `https://welford.me/${this.post.slug}` },
+                    { name: 'og:title', property: 'og:title', hid: 'og:title', content: this.htmlToText(this.post.title.rendered) },
                     { name: 'og:title', property: 'og:title', hid: 'og:title', content: this.htmlToText(this.post.title.rendered) },
                     { name: 'og:description', property: 'og:description', hid: 'og:description', content: this.post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '') },
                     { name: 'og:image', property: 'og:image', hid: 'og:image', content: this.featuredImage(this.post) },
