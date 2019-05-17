@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-row flex-wrap content-center justify-center" v-if="posts().length">
-    <div v-if="!recent" :class="{'bg-blue-darker': theme() === 'dark'}"
+    <div v-if="full" :class="{'bg-blue-darker': theme() === 'dark'}"
          class="relative blog-post-card no-underline max-w-sm rounded overflow-hidden shadow-md focus:shadow-lg focus:outline-none hover:shadow-lg m-4 sm:w-full md:w-1/3 lg:w-1/4 xl:w-1/4"
          tabindex="0"
-         v-for="post in posts()"
+         v-for="post in orderedPosts"
          :key="post.id">
       <div class="flex-grow flex flex-auto h-full flex-col">
         <div class="relative">
@@ -14,6 +14,7 @@
             <p>{{ post._embedded.author[0].name }}</p>
           </div>
         </div>
+        <p v-if="post._embedded['wp:term'][0][0]['slug'] === 'featured'" class="featured-label" :class="{'bg-blue-darker text-white': theme() === 'dark', 'text-blue-darker bg-white': theme() === 'light'}">Featured</p>
         <p v-if="post.status === 'draft'" class="draft-label">Draft</p>
         <div class="px-6 py-4 flex flex-col flex-grow">
           <div
@@ -33,21 +34,42 @@
       </div>
     </div>
 
-    <div class="w-full mt-4" v-else>
-      <div>
-        <nuxt-link :to="{ name: 'post', params: { post: post.slug }}" class="no-underline hover:text-blue text-white" :class="{'text-blue-darker': theme() === 'light'}">
+    <div class="w-full mt-4" v-if="featured">
+      <div class="mt-4" v-for="post in featuredPosts"
+           :key="post.id">
+        <nuxt-link :to="{ name: 'post', params: { post: post.slug }}" class="no-underline text-white hover:text-blue">
           <div class="relative">
-            <img class="w-full" v-bind:src="featuredImage(post)" alt="Post Intro Image">
+            <img class="w-full rounded" v-bind:src="featuredImage(post)" alt="Post Intro Image">
 
-            <div class="flex post-author-details rounded-l px-4 py-2 items-center bg-white" :class="{'bg-blue-darker': theme() === 'dark'}">
-              <img :src="post._embedded.author[0].avatar_urls['96']" width="24" class="mr-2" />
+            <div class="flex post-author-details rounded-l px-4 py-2 items-center bg-white" :class="{'bg-blue-darker text-white': theme() === 'dark', 'text-blue-darker': theme() === 'light'}">
+              <img :src="post._embedded.author[0].avatar_urls['96']" width="24" class="mr-2 rounded" />
               <p>{{ post._embedded.author[0].name }}</p>
             </div>
 
             <p v-if="post.status === 'draft'" class="draft-label">Draft</p>
           </div>
 
-          <p class="font-bold" v-html="post.title.rendered"></p>
+          <p class="font-bold mt-2" v-html="post.title.rendered"></p>
+        </nuxt-link>
+      </div>
+    </div>
+
+    <div class="w-full mt-4" v-if="recent">
+      <div class="mt-4" v-for="post in posts()"
+           :key="post.id">
+        <nuxt-link :to="{ name: 'post', params: { post: post.slug }}" class="no-underline text-white hover:text-blue">
+          <div class="relative">
+            <img class="w-full rounded" v-bind:src="featuredImage(post)" alt="Post Intro Image">
+
+            <div class="flex post-author-details rounded-l px-4 py-2 items-center bg-white" :class="{'bg-blue-darker text-white': theme() === 'dark', 'text-blue-darker': theme() === 'light'}">
+              <img :src="post._embedded.author[0].avatar_urls['96']" width="24" class="mr-2 rounded" />
+              <p>{{ post._embedded.author[0].name }}</p>
+            </div>
+
+            <p v-if="post.status === 'draft'" class="draft-label">Draft</p>
+          </div>
+
+          <p class="font-bold mt-2" v-html="post.title.rendered"></p>
         </nuxt-link>
       </div>
     </div>
@@ -70,6 +92,17 @@
         components: {AppButton, LoadingSpinner},
         props: {
             recent: {
+                type: Boolean,
+                default: false
+            },
+
+            featured: {
+                type: Boolean,
+                default: false
+            },
+
+            full: {
+                type: Boolean,
                 default: false
             }
         },
@@ -117,6 +150,24 @@
                 }
 
                 return 'Load more posts'
+            },
+
+            orderedPosts() {
+                let featured = this.posts().filter((post) => {
+                    return post._embedded['wp:term'][0][0]['slug'] === 'featured';
+                });
+
+                let regular = this.posts().filter((post) => {
+                    return post._embedded['wp:term'][0][0]['slug'] !== 'featured';
+                });
+
+                return featured.concat(regular);
+            },
+
+            featuredPosts() {
+                return this.posts().filter((post) => {
+                    return post._embedded['wp:term'][0][0]['slug'] === 'featured';
+                });
             }
         }
     }
@@ -144,6 +195,17 @@
     left: 15px;
     background: white;
     color: black;
+    padding: 6px 10px;
+    border-radius: .25rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .12), 0 2px 4px 0 rgba(0, 0, 0, .08);
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .featured-label {
+    position: absolute;
+    top: 10px;
+    left: 15px;
     padding: 6px 10px;
     border-radius: .25rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .12), 0 2px 4px 0 rgba(0, 0, 0, .08);

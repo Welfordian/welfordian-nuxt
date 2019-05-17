@@ -36,10 +36,18 @@
         </template>
       </div>
 
-      <div class="hidden lg:block w-1/5 pt-24 px-4 text-white" :class="{'text-blue-darker': theme() === 'light'}">
-        <h2>Recent Posts</h2>
+      <div class="hidden lg:block w-1/5">
+        <div class="hidden lg:block w-full mt-24 px-4 pt-4 text-white bg-blue-darker h-auto self-start pb-4 rounded">
+          <h2>Featured</h2>
 
-        <blog-posts :recent="true"></blog-posts>
+          <blog-posts featured></blog-posts>
+        </div>
+
+        <div class="hidden lg:block w-full mt-24 px-4 pt-4 text-white bg-blue-darker h-auto self-start pb-4 rounded">
+          <h2>Recent</h2>
+
+          <blog-posts recent></blog-posts>
+        </div>
       </div>
     </div>
   </div>
@@ -110,7 +118,7 @@
             },
 
             shareToTwitter() {
-                window.open("https://twitter.com/intent/tweet?url=https://welford.me/" + this.post.slug + "&via=welfordian&text=" + this.htmlToText(this.post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '').substring(0, (139 - (("https://welford.me/" + this.post.slug) + " via @welfordian").length))), "pop", "width=600, height=270, scrollbars=no");
+                window.open("https://twitter.com/intent/tweet?url=https://welford.me/" + this.post.slug + "&via=welfordian", "pop", "width=600, height=270, scrollbars=no");
             },
 
             timeAgo(date) {
@@ -154,7 +162,7 @@
                     { name: 'twitter:creator', property: 'twitter:creator', hid: 'twitter:creator', content: '@welfordian' },
                     { name: 'og:url', property: 'og:url', hid: 'og:url', content: `https://welford.me/${this.post.slug}` },
                     { name: 'og:title', property: 'og:title', hid: 'og:title', content: this.htmlToText(this.post.title.rendered) },
-                    { name: 'og:description', property: 'og:description', hid: 'og:description', content: this.post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '') },
+                    { name: 'og:description', property: 'og:description', hid: 'og:description', content: this.htmlToText(this.post.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, '')) },
                     { name: 'og:image', property: 'og:image', hid: 'og:image', content: this.featuredImage(this.post) },
                     { name: 'og:type', property: 'og:type', hid: 'og:type', content: 'article' }
                 ]
@@ -246,5 +254,10 @@
   .post-content img:nth-of-type(1) {
     margin-bottom: 1.2rem;
     width: 100%;
+    @apply rounded;
+  }
+
+  .post-content img {
+    @apply rounded;
   }
 </style>
