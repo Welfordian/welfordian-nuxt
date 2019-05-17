@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 :class="{'text-blue-darkest': theme() === 'light', 'text-white': theme() === 'dark'}">Comments ({{ parentCommentCount }})</h2>
+    <h2 :class="{'text-blue-darker': theme() === 'light', 'text-white': theme() === 'dark'}">Comments ({{ parentCommentCount }})</h2>
     <div class="flex mt-4 flex-wrap mb-16">
       <img class="mr-4 h-16 rounded" src="https://secure.gravatar.com/avatar/a56f0cb48dce5a44de6b95f15e2abbdc?s=64&d=mm&f=y&r=g" alt="Person silhouette" />
 

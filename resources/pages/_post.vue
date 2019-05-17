@@ -8,7 +8,7 @@
             <h1 class="break-normal pt-6 pb-2 text-2xl md:text-4xl" v-html="post.title.rendered"></h1>
           </div>
           <div class="flex justify-between mt-4 items-center">
-            <div class="flex text-xs">
+            <div class="flex text-sm">
               <font-awesome-icon class="mr-2" :icon="['far', 'clock']" />
 
               <p>{{ this.timeAgo(post.date) }}</p>
@@ -41,7 +41,7 @@
           <blog-posts featured></blog-posts>
         </div>
 
-        <div class="hidden lg:block w-full mt-24 px-4 pt-4 text-white bg-blue-darker h-auto self-start pb-4 rounded">
+        <div class="hidden lg:block w-full mt-12 px-4 pt-4 text-white bg-blue-darker h-auto self-start pb-4 rounded">
           <h2>Recent</h2>
 
           <blog-posts recent></blog-posts>

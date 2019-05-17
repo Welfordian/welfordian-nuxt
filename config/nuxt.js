@@ -20,8 +20,9 @@ module.exports = {
             {hid: 'description', name: 'description', content: pkg.description}
         ],
         link: [
-            {rel: 'icon', type: 'image/png', href: 'https://api.welford.me/images/icons/icon-192x192.png'}
-        ]
+            {rel: 'icon', type: 'image/png', href: 'https://api.welford.me/images/icons/icon-192x192.png'},
+            {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Muli&display=swap' }
+        ],
     },
 
     manifest: {

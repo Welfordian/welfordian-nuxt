@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <div class="w-full mt-4" v-if="featured">
+    <div class="w-full" v-if="featured">
       <div class="mt-4" v-for="post in featuredPosts"
            :key="post.id">
         <nuxt-link :to="{ name: 'post', params: { post: post.slug }}" class="no-underline text-white hover:text-blue">
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="w-full mt-4" v-if="recent">
+    <div class="w-full" v-if="recent">
       <div class="mt-4" v-for="post in posts()"
            :key="post.id">
         <nuxt-link :to="{ name: 'post', params: { post: post.slug }}" class="no-underline text-white hover:text-blue">
