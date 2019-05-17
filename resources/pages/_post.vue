@@ -3,11 +3,9 @@
     <div class="w-full sm:w-4/5 flex justify-around">
       <div class="container-fluid pb-24 pt-16 min-h-screen h-full px-4 w-full lg:w-3/5">
         <template>
-          <div class="font-sans">
-            <div class="flex justify-start items-center">
-              <p v-if="post.status === 'draft'" class="draft-label" :class="{'bg-blue-darkest text-white': theme() === 'light', 'bg-white text-blue-darkest': theme() === 'dark'}">Draft</p>
-              <h1 class="font-sans break-normal pt-6 pb-2 text-2xl md:text-4xl" v-html="post.title.rendered"></h1>
-            </div>
+          <div class="flex justify-start items-center">
+            <p v-if="post.status === 'draft'" class="draft-label" :class="{'bg-blue-darkest text-white': theme() === 'light', 'bg-white text-blue-darkest': theme() === 'dark'}">Draft</p>
+            <h1 class="break-normal pt-6 pb-2 text-2xl md:text-4xl" v-html="post.title.rendered"></h1>
           </div>
           <div class="flex justify-between mt-4 items-center">
             <div class="flex text-xs">
