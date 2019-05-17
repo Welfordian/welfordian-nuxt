@@ -26,9 +26,9 @@
           </p>
 
           <div class="flex flex-grow mt-8 items-end flex-wrap">
-            <app-button tag="nuxt-link" :to="{ name: 'tag-slug', params: { slug: tag.slug }}" class="mr-2 mt-2 text-xs p-2 no-underline" v-for="tag in post._embedded['wp:term'][1]" :key="tag.id">{{ tag.name }}</app-button>
+            <app-button tag="nuxt-link" :to="{ name: 'tag-slug', params: { slug: tag.slug }}" class="mr-2 mb-2 text-xs p-2 no-underline" v-for="tag in post._embedded['wp:term'][1]" :key="tag.id">{{ tag.name }}</app-button>
 
-            <app-button tag="nuxt-link" :to="{ name: 'post', params: { post: post.slug }}"  class="text-center w-full mt-5">Continue Reading</app-button>
+            <app-button tag="nuxt-link" :to="{ name: 'post', params: { post: post.slug }}"  class="text-center w-full mt-3">Continue Reading</app-button>
           </div>
         </div>
       </div>
