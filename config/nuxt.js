@@ -97,7 +97,6 @@ module.exports = {
         runtimeCaching: [
             {
                 urlPattern: 'https://api.welford.dev/.*',
-                handler: 'staleWhileRevalidate'
             },
             {
                 urlPattern: 'https://cdn.welford.me/.*',
