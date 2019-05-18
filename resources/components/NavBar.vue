@@ -36,8 +36,9 @@
             <button @click.prevent="$auth.logout" class="nav-btn inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Logout</button>
           </template>
           <template v-else>
-            <nuxt-link ref="login" @click.native="navOpen = false" to="/login" class="nav-btn inline-block text-sm px-4 py-2 leading-none rounded text-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0" :class="{'bg-white text-blue-darker no-underline': $route.name == 'login'}">Login</nuxt-link>
+            <nuxt-link ref="login" @click.native="navOpen = false" to="/login" class="nav-btn inline-block text-sm px-4 py-2 leading-none rounded text-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0" :class="{'bg-white text-blue-darker no-underline': $route.name === 'login'}">Login</nuxt-link>
           </template>
+          <a href="https://api.welford.dev/wp-login.php?action=register" target="_blank" class="nav-btn inline-block text-sm px-4 py-2 leading-none rounded text-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Write a Post</a>
         </div>
       </div>
     </nav>
