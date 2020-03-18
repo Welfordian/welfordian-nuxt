@@ -10,7 +10,7 @@
         class="text-center lg:text-left">I'm Joshua Welford.</h1>
       <p
         :class="{'text-white': theme() === 'dark', 'text-blue-darker': theme() === 'light'}"
-        class="text-center lg:text-left">A web developer specializing in Laravel & Vue.</p>
+        class="text-center lg:text-left mt-4">A web developer specializing in Laravel & Vue.</p>
 
       <div class="flex justify-center lg:justify-start">
         <app-button tag="nuxt-link" to="/contact" class="mt-12">Let's work together</app-button>
