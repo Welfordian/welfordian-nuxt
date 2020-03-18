@@ -5,7 +5,7 @@
     <form @submit.prevent="submitForm" class="w-full max-w-md mt-2">
       <h1
         :class="{'text-white': theme() === 'dark', 'text-blue-darker': theme() === 'light'}"
-        class="block sm:flex items-center">Get in touch with me <p class="text-sm mt-2 mt-0 sm:ml-6">
+        class="block sm:flex items-center">Gets in touch with me <p class="text-sm mt-2 mt-0 sm:ml-6">
         No recruiters, please.</p></h1>
       <div class="flex flex-wrap -mx-3 mt-8">
         <div class="w-full px-3">
@@ -143,7 +143,7 @@
                 }
 
                 if (!this.hasErrors) {
-                    let request = new Request('https://api.welford.me/contact', {
+                    let request = new Request('/contacts', {
                         method: "POST",
                         body: JSON.stringify(this.contact)
                     });

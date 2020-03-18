@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-wrap justify-between items-center self-center justify-center sm:justify-center">
     <div class="w-full sm:w-full lg:w-1/4 mt-8">
-      <img class="mt-8 mb-8 w-48 h-48 m-auto block shadow-lg rounded-lg" src="https://api.welford.me/images/me-min.jpg" alt="My very own beautiful face"/>
+      <img class="mt-8 mb-8 w-48 h-48 m-auto block shadow-lg rounded-lg" src="/me.jpg" alt="My very own beautiful face"/>
     </div>
 
     <div class="mt-8 mb-8 w-full justify-center lg:w-1/3">

@@ -13,10 +13,10 @@ export const state = () => ({
 
 export const actions = {
     getPosts({ state, commit, rootState }, slug = false) {
-        let endpoint = 'https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed&_tags';
+        let endpoint = 'https://api.laravel-freelancer.com/wp-json/wp/v2/posts?per_page=9&_embed&_tags';
 
         if (rootState.auth.loggedIn) {
-            endpoint = 'https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed&_tags&status=any';
+            endpoint = 'https://api.laravel-freelancer.com/wp-json/wp/v2/posts?per_page=9&_embed&_tags&status=any';
         }
 
         if (slug) {
@@ -33,7 +33,7 @@ export const actions = {
     },
 
     getComments({ state, commit, rootState }, id = false) {
-        let endpoint = `https://api.welford.dev/wp-json/wp/v2/comments?post=${id}&_embedded`;
+        let endpoint = `https://api.laravel-freelancer.com/wp-json/wp/v2/comments?post=${id}&_embedded`;
 
         return new Promise((resolve) => {
             client.get(endpoint).then((r) => {
@@ -43,7 +43,7 @@ export const actions = {
     },
 
     submitComment({ state, commit, rootState}, data) {
-        let endpoint = `https://api.welford.dev/wp-json/wp/v2/comments`;
+        let endpoint = `https://api.laravel-freelancer.com/wp-json/wp/v2/comments`;
 
         return new Promise((resolve) => {
             client.post(endpoint, data).then((r) => {
@@ -58,7 +58,7 @@ export const actions = {
         commit('SET_LOADING', true);
         commit('INCREMENT_PAGE');
 
-        client.get('https://api.welford.dev/wp-json/wp/v2/posts?per_page=9&_embed&status=any&page=' + state.currentPage).then((r) => {
+        client.get('https://api.laravel-freelancer.com/wp-json/wp/v2/posts?per_page=9&_embed&status=any&page=' + state.currentPage).then((r) => {
             commit('SET_MORE_POSTS', r.headers['x-wp-totalpages'] > state.currentPage);
 
             commit('APPEND_POSTS', r.data);

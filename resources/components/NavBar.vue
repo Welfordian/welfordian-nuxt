@@ -15,9 +15,9 @@
             Blog
           </nuxt-link>
 
-          <nuxt-link ref="contact" @click.native="navOpen = false" to="/contact" class="w-full sm:w-auto nav-btn inline-block text-sm px-4 py-2 leading-none rounded text-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 mr-4 lg:mt-0" :class="{'bg-white text-blue-darker no-underline': $route.name == 'contact'}">
+          <a href="https://twitter.com/welfordian" target="_blank" class="nav-btn w-full sm:w-auto inline-block text-sm px-4 py-2 leading-none rounded text-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 mr-4 lg:mt-0">
             Contact
-          </nuxt-link>
+          </a>
 
           <nuxt-link v-if="$auth.loggedIn" ref="contact" @click.native="navOpen = false" to="/dashboard" class="ml-4 nav-link block mt-4 lg:inline-block lg:mt-0 hover:text-white" :class="{'text-white no-underline': $route.name == 'dashboard', 'text-blue-lighter': $route.name !== 'dashboard'}">Dashboard</nuxt-link>
         </div>
@@ -38,7 +38,7 @@
           <template v-else>
             <nuxt-link ref="login" @click.native="navOpen = false" to="/login" class="nav-btn inline-block text-sm px-4 py-2 leading-none rounded text-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0" :class="{'bg-white text-blue-darker no-underline': $route.name === 'login'}">Login</nuxt-link>
           </template>
-          <a href="https://api.welford.dev/wp-login.php?action=register" target="_blank" class="nav-btn inline-block text-sm px-4 py-2 leading-none rounded text-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Write a Post</a>
+          <a href="https://api.laravel-freelancer.com/wp-login.php?action=register" target="_blank" class="nav-btn inline-block text-sm px-4 py-2 leading-none rounded text-white no-underline hover:border-transparent hover:text-grey-darker hover:bg-white mt-4 lg:mt-0">Write a Post</a>
         </div>
       </div>
     </nav>

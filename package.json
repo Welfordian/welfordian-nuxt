@@ -7,7 +7,7 @@
   "scripts": {
     "serve": "node --max_old_space_size=8000 ./serve.js",
     "serve:dev": "npm run dev",
-    "dev": "nodemon --watch app --watch bootstrap --watch config --watch .env -x node server.js",
+    "dev": "nodemon --watch app --watch bootstrap --watch config --watch resources --watch .env -x node server.js",
     "build": "cross-env NODE_ENV=production node ./ace nuxtbuild",
     "start": "cross-env NODE_ENV=production node server.js"
   },

@@ -28,7 +28,7 @@
 
           <div class="post-content" :class="{'bg-blue-darkest text-white': theme() === 'dark'}" v-html="post.content.rendered"></div>
 
-          <app-button v-if="post.status === 'draft'" tag="a" target="_blank" class="w-full block text-center no-underline mt-5" :href="'https://api.welford.dev/wp-admin/post.php?post=' + post.id + '&action=edit'">Continue Editing</app-button>
+          <app-button v-if="post.status === 'draft'" tag="a" target="_blank" class="w-full block text-center no-underline mt-5" :href="'https://api.laravel-freelancer.com/wp-admin/post.php?post=' + post.id + '&action=edit'">Continue Editing</app-button>
 
           <post-comments class="mt-16" :post="post.id"></post-comments>
         </template>

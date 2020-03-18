@@ -82,9 +82,9 @@ module.exports = {
         strategies: {
             local: {
                 endpoints: {
-                    login: { url: 'https://api.welford.dev/wp-json/jwt-auth/v1/token', method: 'post', propertyName: 'token' },
+                    login: { url: 'https://api.laravel-freelancer.com/wp-json/jwt-auth/v1/token', method: 'post', propertyName: 'token' },
                     logout: false,
-                    user: { url: 'https://api.welford.dev/wp-json/wp/v2/users/me', method: 'get', propertyName: 'id' }
+                    user: { url: 'https://api.laravel-freelancer.com/wp-json/wp/v2/users/me', method: 'get', propertyName: 'id' }
                 },
             }
         },
@@ -97,7 +97,7 @@ module.exports = {
     workbox: {
         runtimeCaching: [
             {
-                urlPattern: 'https://api.welford.dev/.*',
+                urlPattern: 'https://api.laravel-freelancer.com/.*',
             },
             {
                 urlPattern: 'https://cdn.welford.me/.*',
