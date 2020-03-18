@@ -13,7 +13,7 @@
         class="text-center lg:text-left mt-4">A web developer specializing in Laravel & Vue.</p>
 
       <div class="flex justify-center lg:justify-start">
-        <app-button tag="nuxt-link" to="/contact" class="mt-12">Let's work together</app-button>
+        <app-button tag="a" href="https://twitter.com/welfordian" target="_blank" class="mt-12">Let's work together</app-button>
       </div>
     </div>
   </div>
