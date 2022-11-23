@@ -46,7 +46,7 @@
     "nuxt": "^2.4.0",
     "nuxt-fontawesome": "^0.4.0",
     "nuxt-validate": "^0.1.2",
-    "socket.io": "^2.4.0",
+    "socket.io": "^2.5.0",
     "tocca": "^2.0.4",
     "unescape": "^1.0.1",
     "uuid": "^3.3.2"
