@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@adonisjs/ace": "^4.0.7",
-    "@adonisjs/auth": "^3.*",
+    "@adonisjs/auth": "^8.*",
     "@adonisjs/bodyparser": "^1.0.8",
     "@adonisjs/cors": "^1.0.2",
     "@adonisjs/fold": "^4.0.5",
